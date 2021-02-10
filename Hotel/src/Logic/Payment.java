@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Main;
+package Logic;
 
 public class Payment {
     private String k_idPago;
