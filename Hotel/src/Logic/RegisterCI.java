@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Main;
+package Logic;
 
 /**
  *
@@ -11,14 +11,17 @@ package Logic.Main;
  */
 public class RegisterCI {
     
-    private String k_registro = "";
-    private String f_inicio = "";
-    private String f_salida = "";
+    private String k_registro;
+    private String f_inicio; 
+    private String f_salida;
     
     //CONSTRUCTOR 
 
     public RegisterCI() {
-    
+        
+        k_registro = "";
+        f_inicio = "";
+        f_salida = "";
     }
 
     //GETTERS

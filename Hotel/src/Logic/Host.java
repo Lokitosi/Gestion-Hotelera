@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Main;
+package Logic;
 
 /**
  *
@@ -11,11 +11,12 @@ package Logic.Main;
  */
 public class Host extends Person {
     
-    private String f_nacimiento = "";
-    private String n_direccion = "";
+    private String f_nacimiento;
+    private String n_direccion;
 
     public Host() {
-       
+       f_nacimiento = "";
+       n_direccion = "";
     }
     
     //GETTERS

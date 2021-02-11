@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logic.Main;
+package Logic;
 
 /**
  *
@@ -12,17 +12,24 @@ package Logic.Main;
 public class Person {
  
     //ATRIBUTOS
-    private int k_numeroid = 0;
-    private String k_tipo = "";
-    private String n_nombre1 = "";
-    private String n_nombre2 = "";
-    private String n_apellido1 = "";
-    private String n_apellido2= "";
-    private int q_telefono = 0;
+    private int k_numeroid;
+    private String k_tipo;
+    private String n_nombre1;
+    private String n_nombre2;
+    private String n_apellido1;
+    private String n_apellido2;
+    private int q_telefono;
 
     //CONSTRUCTOR
 
     public Person() {
+        k_numeroid = 0;
+        k_tipo = "";
+        n_nombre1 = "";
+        n_nombre2 = "";
+        n_apellido1 = "";
+        n_apellido2= "";
+        q_telefono = 0;
     }
 
     //GETTERS
