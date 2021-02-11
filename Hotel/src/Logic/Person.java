@@ -11,7 +11,7 @@ package Logic;
  */
 public class Person {
  
-    //ATRIBUTOS
+    /*ATRIBUTOS*/
     private int k_numeroid;
     private String k_tipo;
     private String n_nombre1;
@@ -20,7 +20,7 @@ public class Person {
     private String n_apellido2;
     private int q_telefono;
 
-    //CONSTRUCTOR
+    /*CONSTRUCTOR*/
 
     public Person() {
         k_numeroid = 0;
@@ -32,7 +32,7 @@ public class Person {
         q_telefono = 0;
     }
 
-    //GETTERS
+    /*GETTERS*/
     public int getK_numeroid() {
         return k_numeroid;
     }
@@ -61,7 +61,7 @@ public class Person {
         return q_telefono;
     }
     
-    //SETTERS 
+    /*SETTERS*/
 
     public void setK_numeroid(int k_numeroid) {
         this.k_numeroid = k_numeroid;
