@@ -7,17 +7,21 @@ package Logic;
 
 public class RegisterCI {
     
-    private String k_registro = "";
-    private String f_inicio = "";
-    private String f_salida = "";
+    /*ATRIBUTOS*/
+    private String k_registro;
+    private String f_inicio; 
+    private String f_salida;
     
-    //CONSTRUCTOR 
+    /*CONSTRUCTOR*/ 
 
     public RegisterCI() {
-    
+        
+        k_registro = "";
+        f_inicio = "";
+        f_salida = "";
     }
 
-    //GETTERS
+    /*GETTERS*/
 
     public String getF_inicio() {
         return f_inicio;
@@ -31,7 +35,7 @@ public class RegisterCI {
         return k_registro;
     }
     
-    //SETTERS 
+    /*SETTERS */
 
     public void setF_inicio(String f_inicio) {
         this.f_inicio = f_inicio;

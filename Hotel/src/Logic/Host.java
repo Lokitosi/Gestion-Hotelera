@@ -7,14 +7,17 @@ package Logic;
 
 public class Host extends Person {
     
-    private String f_nacimiento = "";
-    private String n_direccion = "";
+    /*ATRIBUTOS*/
+    private String f_nacimiento;
+    private String n_direccion;
 
+    /*CONSTRUCTOR*/
     public Host() {
-       
+       f_nacimiento = "";
+       n_direccion = "";
     }
     
-    //GETTERS
+    /*GETTERS*/
 
     public String getF_nacimiento() {
         return f_nacimiento;
@@ -25,7 +28,7 @@ public class Host extends Person {
     }
 
     
-     //SETTERS
+     /*SETTERS*/
 
     public void setF_nacimiento(String f_nacimiento) {
         this.f_nacimiento = f_nacimiento;

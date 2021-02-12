@@ -7,21 +7,28 @@ package Logic;
 
 public class Person {
  
-    //ATRIBUTOS
-    private int k_numeroid = 0;
-    private String k_tipo = "";
-    private String n_nombre1 = "";
-    private String n_nombre2 = "";
-    private String n_apellido1 = "";
-    private String n_apellido2= "";
-    private int q_telefono = 0;
+    /*ATRIBUTOS*/
+    private int k_numeroid;
+    private String k_tipo;
+    private String n_nombre1;
+    private String n_nombre2;
+    private String n_apellido1;
+    private String n_apellido2;
+    private int q_telefono;
 
-    //CONSTRUCTOR
+    /*CONSTRUCTOR*/
 
     public Person() {
+        k_numeroid = 0;
+        k_tipo = "";
+        n_nombre1 = "";
+        n_nombre2 = "";
+        n_apellido1 = "";
+        n_apellido2= "";
+        q_telefono = 0;
     }
 
-    //GETTERS
+    /*GETTERS*/
     public int getK_numeroid() {
         return k_numeroid;
     }
@@ -50,7 +57,7 @@ public class Person {
         return q_telefono;
     }
     
-    //SETTERS 
+    /*SETTERS*/
 
     public void setK_numeroid(int k_numeroid) {
         this.k_numeroid = k_numeroid;
