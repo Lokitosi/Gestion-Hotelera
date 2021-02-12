@@ -1,30 +1,35 @@
 package Logic;
 
 /**
- *
+ * 
+ * @author William Alejandro Ardila Sánchez
 */
 
 public class Room {
-    private long k_roomNumber;
-    private char i_state;
+    private String k_numero;
+    private String i_estado;
     
     /* Constructor */
     public Room() {
-        k_roomNumber = 0;
-        i_state = 0;
+        k_numero = "";
+        i_estado = "";
     }
     
     /* Setters */
-    public void setRoomNumber(long k_room) {
-        this.k_roomNumber = k_room;
+    public void setK_numero(String k_room) {
+        this.k_numero = k_room;
     }
     
-    public void setState(char i_state) {
-        this.i_state = i_state;
+    public void setI_estado(String i_state) {
+        this.i_estado = i_state;
     }
     
     /* Getters */    
-    public long getRoomNumber() {
-        return k_roomNumber;
+    public String getK_numero() {
+        return k_numero;
+    }
+    
+    public String getI_estado() {
+        return i_estado;
     }
 }

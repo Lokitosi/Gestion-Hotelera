@@ -1,64 +1,65 @@
 package Logic;
 
 /**
- *
+ * 
+ * @author William Alejandro Ardila Sánchez
 */
 
 public class Reservation {
-    private long k_code;
-    private int q_peopleQuant;
-    private int q_duration;
-    private char i_state;
-    private String f_start;
-    
+    private String k_codigo;
+    private String f_inicio;
+    private int q_duracion;
+    private String i_estado;
+    private int q_cantPersonas;
+     
     /* Constructor */
     public Reservation() {
-        k_code = 0;
-        q_peopleQuant = 0;
-        q_duration = 0;
-        i_state = 0;
-        f_start = "";
+        k_codigo = "";
+        f_inicio = "";
+        q_duracion = 0;
+        i_estado = "";
+        q_cantPersonas = 0;
     }
     
     /* Setters */
-    public void setCode(long k_code) {
-        this.k_code = k_code;
+    public void setK_codigo(String k_code) {
+        this.k_codigo = k_code;
     }
     
-    public void setPeopleQuant(int q_peopleQuant) {
-        this.q_peopleQuant = q_peopleQuant;
+    public void setF_inicio(String f_start) {
+        this.f_inicio = f_start;
     }
     
-    public void setDuration(int q_duration) {
-        this.q_duration = q_duration;
+    public void setQ_duracion(int q_duration) {
+        this.q_duracion = q_duration;
+    }
+ 
+    public void setI_estado(String i_state) {
+        this.i_estado = i_state;
     }
     
-    public void setState(char i_state) {
-        this.i_state = i_state;
-    }
-    
-    public void setStartDate(String f_start) {
-        this.f_start = f_start;
+    public void setQ_cantPersonas(int q_peopleQuant) {
+        this.q_cantPersonas = q_peopleQuant;
     }
     
     /* Getters */
-    public long getCode() {
-        return k_code;
+    public String getK_codigo() {
+        return k_codigo;
     }
     
-    public int getPeopleQuant() {
-        return q_peopleQuant;
+    public String getF_inicio() {
+        return f_inicio;
     }
     
-    public int getDuration() {
-        return q_duration;
+    public int getQ_duracion() {
+        return q_duracion;
+    }
+
+    public String getI_estado() {
+        return i_estado;
     }
     
-    public char getState() {
-        return i_state;
-    }
-    
-    public String getStartDate() {
-        return f_start;
+    public int getQ_cantPersonas() {
+        return q_cantPersonas;
     }
 }

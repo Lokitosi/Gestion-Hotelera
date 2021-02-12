@@ -1,7 +1,8 @@
 package Data;
 
 /**
- *
+ * 
+ * @author William Alejandro Ardila Sánchez
 */
 
 import java.sql.Connection;
@@ -9,44 +10,44 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    static String bd = "Hotel_4_0";
+    static String bd = "Hotel";
     static String login = "root";
     static String password = "11122001";
     static String url = "jdbc:mysql://localhost/"+bd;
-    static String mensaje = "";
+    static String message = "";
     
-    Connection conexion = null;
+    Connection connection = null;
     
     /* Constructor*/
     public DBConnection() {
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection(url,login,password);
+            connection = DriverManager.getConnection(url,login,password);
 
-            if (conexion!=null){
+            if (connection!=null){
                 System.out.println("Conexión a base de datos "+bd+" OK");
             }
         }catch(SQLException | ClassNotFoundException e){
-            mensaje = e.getMessage();
+            message = e.getMessage();
         }
     }
     
     /* Setters */
-    public static void setMensaje(String mensaje) {
-        DBConnection.mensaje = mensaje;
+    public static void setMessage(String mensaje) {
+        DBConnection.message = mensaje;
     }
     
     /* Getters */
-    public static String getMensaje() {
-        return mensaje;
+    public static String getMessage() {
+        return message;
     }
 
-    public Connection getConexion(){
-        return conexion;
+    public Connection getConnection(){
+        return connection;
     }
 
     /* Disconnect */
-    public void desconectar(){
-        conexion = null;
+    public void disconnect(){
+        connection = null;
     }
 }
