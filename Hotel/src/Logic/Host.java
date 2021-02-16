@@ -37,6 +37,4 @@ public class Host extends Person {
     public void setN_direccion(String n_direccion) {
         this.n_direccion = n_direccion;
     }
-    
-    
 }

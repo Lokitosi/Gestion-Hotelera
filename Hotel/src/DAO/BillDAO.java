@@ -3,7 +3,6 @@ package DAO;
 import java.sql.*;
 import Data.DBConnection;
 import Logic.Bill;
-import Logic.Reservation;
 
 public class BillDAO {
     private DBConnection connection;
@@ -23,8 +22,6 @@ public class BillDAO {
     public void setBill(Bill bill) {
         this.bill = bill;
     }
-    
-    
     
     /* CRUD */
     public void insertBill() {

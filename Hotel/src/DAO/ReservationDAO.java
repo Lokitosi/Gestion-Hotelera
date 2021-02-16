@@ -1,10 +1,5 @@
 package DAO;
 
-/**
- * 
- * @author William Alejandro Ardila Sánchez
-*/
-
 import java.sql.*;
 
 import Data.DBConnection;
@@ -34,11 +29,11 @@ public class ReservationDAO {
         return reservation;
     }
     
-    public ResultSet getRoomByID(int id) throws SQLException {
+    public ResultSet getRoomByID(String id) throws SQLException {
         PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_codigo, f_inicio, q_duracion, "
                 + "i_estado, q_cantPersonas FROM reserva WHERE k_numero = ?");
         
-        pState.setInt(1, id); 
+        pState.setString(1, id);  
         ResultSet res = pState.executeQuery();
         return res;
     }

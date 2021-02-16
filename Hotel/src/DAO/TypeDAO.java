@@ -3,7 +3,6 @@ package DAO;
 import java.sql.*;
 
 import Data.DBConnection;
-import Logic.Payment;
 import Logic.Type;
 
 public class TypeDAO {

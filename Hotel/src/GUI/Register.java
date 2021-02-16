@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Logic.Person;
+import DAO.PersonDAO;
+
 public class Register extends JFrame implements ActionListener {
     /* Graphic variables */
     private JLabel lblBackground;
@@ -28,8 +31,23 @@ public class Register extends JFrame implements ActionListener {
     /* Logic variables */
     private Start window2;
     
+    private Person person;
+    private PersonDAO personDAO;
+    
+    private String name1;
+    private String name2;
+    private String surname1;
+    private String surname2;
+    private int phone1;
+    private int phone2;
+    private int document;
+    private String documentType;
+    
     /* Constructor */
     public Register() {
+        person = new Person();
+        personDAO = new PersonDAO();
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
         // Create components
@@ -144,10 +162,33 @@ public class Register extends JFrame implements ActionListener {
         window2 = new Start(); 
     }
     
+    /* Register */
+    public void register() {
+        name1 = txtName1.getText();
+        name2 = txtName2.getText();
+        surname1 = txtSurname1.getText();
+        surname2 = txtSurname2.getText();
+        phone1 = Integer.parseInt(txtPhone1.getText());
+        phone2 = Integer.parseInt(txtPhone2.getText());
+        document = Integer.parseInt(txtDocument.getText());
+        documentType = txtDocumentType.getText();
+        
+        person.setN_nombre1(name1);
+        person.setN_nombre2(name2);
+        person.setN_apellido1(surname1);
+        person.setN_apellido2(surname2);
+        person.setQ_telefono(phone1);
+        person.setK_numeroid(document); 
+        person.setK_tipo(documentType);
+        
+        personDAO.setPerson(person);
+        personDAO.insertRoom();
+    }
+    
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnRegister) {
-            
+            register();
         }
         
         if(event.getSource() == btnGoToBack) {

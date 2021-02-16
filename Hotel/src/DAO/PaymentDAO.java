@@ -25,7 +25,6 @@ public class PaymentDAO {
         this.payment = payment;
     }
     
-    
     /* CRUD */
     public void insertPayment() {
       try {

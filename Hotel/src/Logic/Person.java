@@ -10,7 +10,7 @@ package Logic;
 public class Person {
  
     /*ATRIBUTOS*/
-    private int k_numeroid;
+    private int k_numeroid; 
     private String k_tipo;
     private String n_nombre1;
     private String n_nombre2;
@@ -62,7 +62,7 @@ public class Person {
     /*SETTERS*/
 
     public void setK_numeroid(int k_numeroid) {
-        this.k_numeroid = k_numeroid;
+        this.k_numeroid = k_numeroid; 
     }
 
     public void setK_tipo(String k_tipo) {

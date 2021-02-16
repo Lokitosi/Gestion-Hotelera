@@ -38,7 +38,5 @@ public class Type {
 
     public void setV_precio(Double v_precio) {
         this.v_precio = v_precio;
-    }
-   
-   
+    } 
 }

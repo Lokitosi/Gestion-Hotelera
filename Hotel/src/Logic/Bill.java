@@ -6,7 +6,7 @@ package Logic;
 */
 
 public class Bill {
-        private String k_cuenta;
+    private String k_cuenta;
     private String id_Pago;
 
     public Bill(){
@@ -27,7 +27,5 @@ public class Bill {
 
     public void setId_Pago(String id_Pago) {
         this.id_Pago = id_Pago;
-    }
-    
-    
+    }  
 }
