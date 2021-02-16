@@ -16,7 +16,6 @@ public class Person {
     private String n_nombre2;
     private String n_apellido1;
     private String n_apellido2;
-    private int q_telefono;
 
     /*CONSTRUCTOR*/
 
@@ -27,7 +26,7 @@ public class Person {
         n_nombre2 = "";
         n_apellido1 = "";
         n_apellido2= "";
-        q_telefono = 0;
+        
     }
 
     /*GETTERS*/
@@ -54,10 +53,6 @@ public class Person {
     public String getN_nombre2() {
         return n_nombre2;
     }
-
-    public int getQ_telefono() {
-        return q_telefono;
-    }
     
     /*SETTERS*/
 
@@ -83,24 +78,6 @@ public class Person {
 
     public void setN_nombre2(String n_nombre2) {
         this.n_nombre2 = n_nombre2;
-    }
-
-    public void setQ_telefono(int q_telefono) {
-        this.q_telefono = q_telefono;
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }  
     
 }

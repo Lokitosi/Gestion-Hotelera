@@ -49,7 +49,7 @@ public class HostDAO {
     }
     
     /* CRUD */
-    public void insertRoom() {
+    public void insertHost() {
       try {
       
         PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO huesped (k_numeroid, k_tipo," 
@@ -66,7 +66,7 @@ public class HostDAO {
       }
     }
     
-    public void updateRoom() {
+    public void updateHost() {
         try {
             PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE huesped SET f_nacimiento = ?,"
                 +" n_direccion = ?  WHERE k_numeroid = ? AND k_tipo = ?");
@@ -84,5 +84,5 @@ public class HostDAO {
         }
     }
     
-    public void deleteRoom() {}
+    public void deleteHost() {}
 }

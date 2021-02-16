@@ -9,7 +9,6 @@ import Logic.Person;
  *
  * @author Julian Sanchez
  */
-/*Revisar luego de la separacion del telefono*/
 
 public class PersonDAO {
     
@@ -38,7 +37,7 @@ public class PersonDAO {
     
     public ResultSet getPersonByID (int id, String type) throws SQLException {
         PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo, n_nombre1, " 
-            +"n_nombre2, n_apellido1, n_apellido2, q_telefono FROM persona WHERE k_numeroid = ? AND k_tipo = ?" );
+            +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND k_tipo = ?" );
         
         pState.setInt(1, id); 
         pState.setString(2, type);
@@ -47,11 +46,11 @@ public class PersonDAO {
     }
     
     /* CRUD */
-    public void insertRoom() {
+    public void insertPerson() {
       try {
       
         PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO persona (k_numeroid, k_tipo, n_nombre1, "
-            + "n_nombre2, n_apellido1, n_apellido2, q_telefono) values(?,?,?,?,?,?,?)");
+            + "n_nombre2, n_apellido1, n_apellido2 ) values(?,?,?,?,?,?)");
         
             pState.setInt(1, person.getK_numeroid());
             pState.setString(2, person.getK_tipo());
@@ -59,7 +58,6 @@ public class PersonDAO {
             pState.setString(4, person.getN_nombre2());
             pState.setString(5, person.getN_apellido1());
             pState.setString(6, person.getN_apellido2());
-            pState.setInt(7, person.getQ_telefono());
             
             pState.executeUpdate();
       } catch (SQLException e) {
@@ -67,20 +65,19 @@ public class PersonDAO {
       }
     }
     
-    public void updateRoom() {
+    public void updatePerson() {
         try {
             PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE persona SET  n_nombre1 = ?, n_nombre2 = ?,"
-                + "n_apellido1 = ?, n_apellido2 = ?, q_telefono = ?  WHERE k_numeroid = ? AND k_tipo = ?" );
+                + "n_apellido1 = ?, n_apellido2 = ? WHERE k_numeroid = ? AND k_tipo = ?" );
             
             pState.setString(1, person.getN_nombre1());
             pState.setString(2, person.getN_nombre2());
             pState.setString(3, person.getN_apellido1());
             pState.setString(4, person.getN_apellido2());
-            pState.setInt(5, person.getQ_telefono());
             
             /* Llave compuesta */
-            pState.setInt(6, person.getK_numeroid());
-            pState.setString(7, person.getK_tipo());
+            pState.setInt(5, person.getK_numeroid());
+            pState.setString(6, person.getK_tipo());
             
             pState.executeUpdate();
 
@@ -89,5 +86,5 @@ public class PersonDAO {
         }
     }
     
-    public void deleteRoom() {}
+    public void deletePerson() {}
 }

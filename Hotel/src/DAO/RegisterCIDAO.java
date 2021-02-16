@@ -52,7 +52,7 @@ public class RegisterCIDAO {
     }
     
     /* CRUD */
-    public void insertRoom() {
+    public void insertRegisterCI() {
       try {
       
         PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO registroci (k_registro, k_codigo, k_numeroid,"
@@ -71,7 +71,7 @@ public class RegisterCIDAO {
       }
     }
     
-    public void updateRoom() {
+    public void updateRegisterCI() {
         try {
             PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE registroci SET f_inicio = ?, f_ salida= ?, "
                     + " WHERE k_registro = ?");
@@ -86,6 +86,6 @@ public class RegisterCIDAO {
         }
     }
     
-    public void deleteRoom() {}
+    public void deleteRegisterCI() {}
        
 }
