@@ -5,6 +5,8 @@ package Logic;
  * @author Julian Sanchez
 */
 
+/*Revisar luego de la separacion del telefono*/
+
 public class Person {
  
     /*ATRIBUTOS*/

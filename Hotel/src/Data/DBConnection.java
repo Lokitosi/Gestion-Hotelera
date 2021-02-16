@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DBConnection {
     static String bd = "Hotel";
     static String login = "root";
-    static String password = "11122001";
+    static String password = "juliono1999";
     static String url = "jdbc:mysql://localhost/"+bd;
     static String message = "";
     
