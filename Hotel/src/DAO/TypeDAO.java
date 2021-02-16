@@ -1,23 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
+import java.sql.*;
+
 import Data.DBConnection;
-import Logic.Reservation;
+import Logic.Payment;
 import Logic.Type;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-/**
- *
- * @author andre
- */
 public class TypeDAO {
-
     private DBConnection connection;
     private Type type;
     
@@ -26,6 +15,8 @@ public class TypeDAO {
         connection = new DBConnection();
         type = new Type();
     }
+    
+    /*Getters and settes*/
 
     public Type getType() {
         return type;
@@ -34,37 +25,31 @@ public class TypeDAO {
     public void setType(Type type) {
         this.type = type;
     }
-        
+    
+    
     /* CRUD */
     public void insertType() {
       try {
       
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO tipo (k_codigo, f_inicio, q_duracion, "
-                + "i_estado, q_cantPersonas) values(?,?,?,?,?)");
+        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO tipo (k_idTipo, n_descripcion, v_precio)"
+                + " values(?,?,?)");
         
-            pState.setString(1, reservation.getK_codigo());
-            pState.setString(2, reservation.getF_inicio());
-            pState.setInt(3, reservation.getQ_duracion());
-            pState.setString(4, reservation.getI_estado());
-            pState.setInt(5, reservation.getQ_cantPersonas());
-            
+            pState.setString(1, type.getK_idTipo());
+            pState.setString(2, type.getN_descripcion());
+            pState.setDouble(3, type.getV_precio()); 
             pState.executeUpdate();
       } catch (SQLException e) {
           System.out.println("ERROR: " + e);
       }
     }
     
-    public void updateRoom() {
+    public void updatePayment() {
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE reserva SET f_inicio = ?, q_duracion = ?, "
-                    + "i_estado = ?, q_cantPersonas = ? WHERE k_codigo = ?");
+            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE tipo SET n_descripcion = ? , v_precio = ?" 
+                    + "WHERE k_idTipo = ?");
             
-            pState.setString(1, reservation.getF_inicio());
-            pState.setInt(2, reservation.getQ_duracion());
-            pState.setString(3, reservation.getI_estado());
-            pState.setInt(4, reservation.getQ_cantPersonas());
-            pState.setString(5, reservation.getK_codigo());
-
+            pState.setString(1, type.getN_descripcion());
+            pState.setDouble(2, type.getV_precio()); 
             pState.executeUpdate();
 
         } catch (SQLException e) {
@@ -73,6 +58,4 @@ public class TypeDAO {
     }
     
     public void deleteRoom() {}
-}
-
 }
