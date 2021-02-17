@@ -5,11 +5,7 @@ package Logic;
  * @author Julian Sanchez
 */
 
-/*Revisar luego de la separacion del telefono*/
-
 public class Person {
- 
-    /*ATRIBUTOS*/
     private int k_numeroid; 
     private String k_tipo;
     private String n_nombre1;
@@ -18,7 +14,6 @@ public class Person {
     private String n_apellido2;
 
     /*CONSTRUCTOR*/
-
     public Person() {
         k_numeroid = 0;
         k_tipo = "";
@@ -55,7 +50,6 @@ public class Person {
     }
     
     /*SETTERS*/
-
     public void setK_numeroid(int k_numeroid) {
         this.k_numeroid = k_numeroid; 
     }
@@ -78,6 +72,5 @@ public class Person {
 
     public void setN_nombre2(String n_nombre2) {
         this.n_nombre2 = n_nombre2;
-    }  
-    
+    }   
 }

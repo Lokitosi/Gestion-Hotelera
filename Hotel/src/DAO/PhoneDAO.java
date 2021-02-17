@@ -1,28 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
-import java.sql.*;
-
-import Data.DBConnection;
-import Logic.Person;
-import Logic.Phone;
 
 /**
  *
  * @author Julian Sanchez
- */
+*/
+
+import java.sql.*;
+
+import Database.*;
+import Logic.Phone;
+import Logic.Person;
+
 public class PhoneDAO {
-    
-    private DBConnection connection;
     private Phone phone;
     private Person person;
 
     /* Constructor*/
     public PhoneDAO() {
-       connection = new DBConnection();
        phone = new Phone();
        person = new Person();
     }
@@ -37,10 +31,6 @@ public class PhoneDAO {
     }
     
     /* Getters */
-    public String getMessage() {
-        return connection.getMessage();
-    }
-    
     public Phone getPhone(){
         return phone;
     }
@@ -49,31 +39,49 @@ public class PhoneDAO {
         return person;
     }
     
-    public ResultSet getPhoneByID(int id,String type) throws SQLException {
-        PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo,"
-                +" k_telefono FROM telefono WHERE k_numeroid = ? AND k_tipo = ?");
+    public void getPhoneByID() throws CaException {   
+        try{
+            String strSQL = "SELECT k_numeroid, k_tipo, k_telefono FROM telefono WHERE k_numeroid = ? AND k_tipo = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setInt(1, person.getK_numeroid());  
+            pState.setString(2, person.getK_tipo());
+            
+            ResultSet res = pState.executeQuery();
         
-        pState.setInt(1, id);
-        pState.setString(2,type);
-        ResultSet res = pState.executeQuery();
-        return res;
+            while (res.next()){
+                person.setK_numeroid(res.getInt(1));
+                person.setK_tipo(res.getString(2)); 
+                phone.setK_telefono(res.getInt(3));
+            }
+        } catch(SQLException e) {
+            throw new CaException("PhoneDAO", "No pudo recuperar el teléfono " + e.getMessage());
+        }
     }
     
     /* CRUD */
-    public void insertPhone() {
-      try {
-      
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO telefono (k_numeroid, k_tipo," 
-                + "k_telefono) values (?,?,?)");
-        
+    public void insertPhone() throws CaException {
+        try {
+            String strSQL = "INSERT INTO telefono (k_numeroid, k_tipo, k_telefono) values (?,?,?)";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setInt(1, person.getK_numeroid());
             pState.setString(2, person.getK_tipo());
             pState.setInt(3, phone.getK_telefono());
-            
+
             pState.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      }
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("PersonDAO", "No pudo insertar la persona " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
     public void updatePhone() {}

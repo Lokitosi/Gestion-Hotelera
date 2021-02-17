@@ -2,16 +2,14 @@ package DAO;
 
 import java.sql.*;
 
-import Data.DBConnection;
+import Database.*;
 import Logic.Room;
 
 public class RoomDAO {
-    private DBConnection connection;
     private Room room;
     
     /* Constructor */
     public RoomDAO() {
-        connection = new DBConnection();
         room = new Room();
     }
     
@@ -21,48 +19,70 @@ public class RoomDAO {
     }
     
     /* Getters */
-    public String getMessage() {
-        return connection.getMessage();
-    }
-    
     public Room getRoom() {
         return room;
     }
     
-    public ResultSet getRoomByID(String id) throws SQLException {
-        PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numero, i_estado FROM habitacion WHERE k_numero = ?");
+    public void getRoomByID() throws CaException {  
+        try{
+            String strSQL = "SELECT k_numero, i_estado FROM habitacion WHERE k_numero = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setString(1, room.getK_numero()); 
+            
+            ResultSet res = pState.executeQuery();
         
-        pState.setString(1, id); 
-        ResultSet res = pState.executeQuery();
-        return res;
+            while (res.next()){
+                room.setK_numero(res.getString(1));
+                room.setI_estado(res.getString(2));
+            }
+        } catch(SQLException e) {
+            throw new CaException("RoomDAO", "No pudo recuperar la habitación " + e.getMessage());
+        }
     }
     
     /* CRUD */
-    public void insertRoom() {
-      try {
-      
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO habitacion (k_numero, i_estado) values(?,?)");
-        
+    public void insertRoom() throws CaException {
+        try {
+            String strSQL = "INSERT INTO habitacion (k_numero, i_estado) values(?,?)";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, room.getK_numero());
             pState.setString(2, room.getI_estado());
-            
+
             pState.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      }
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("RoomDAO", "No pudo insertar la habitación " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
-    public void updateRoom() {
+    public void updateRoom() throws CaException {      
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE habitacion SET i_estado = ? WHERE k_numero = ?");
-            
+            String strSQL = "UPDATE habitacion SET i_estado = ? WHERE k_numero = ?";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, room.getI_estado());
-            pState.setString(1, room.getK_numero());
+            pState.setString(2, room.getK_numero());
 
             pState.executeUpdate();
-
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
+            throw new CaException( "RoomDAO", "No pudo actualizar la habitación " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

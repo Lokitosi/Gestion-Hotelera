@@ -3,7 +3,8 @@ package Logic;
 /**
  *
  * @author Santiago Galindo
- */
+*/
+
 public class Bill_Consumption {
     
     private String f_consumo;

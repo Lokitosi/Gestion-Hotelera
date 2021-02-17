@@ -1,23 +1,20 @@
 package DAO;
 
-import java.sql.*;
-
-import Data.DBConnection;
-import Logic.Person;
-
 /**
  *
  * @author Julian Sanchez
- */
+*/
+
+import java.sql.*;
+
+import Database.*;
+import Logic.Person;
 
 public class PersonDAO {
-    
-    private DBConnection connection;
     private Person person;
 
     /*Constructor*/
     public PersonDAO() {    
-        connection = new DBConnection();
         person = new Person();
     }
     
@@ -26,63 +23,87 @@ public class PersonDAO {
         this.person = person;
     }
     
-    /*Getters*/
-    public String getMessage() {
-        return connection.getMessage();
-    }
-    
+    /*Getters*/ 
     public Person getPerson(){
         return person;
     }
     
-    public ResultSet getPersonByID (int id, String type) throws SQLException {
-        PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo, n_nombre1, " 
-            +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND k_tipo = ?" );
+    public void getPersonByID () throws CaException {
+        try{
+            String strSQL = "SELECT k_numeroid, k_tipo, n_nombre1, " 
+                +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND k_tipo = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setInt(1, person.getK_numeroid());  
+            pState.setString(2, person.getK_tipo());   
+            
+            ResultSet res = pState.executeQuery();
         
-        pState.setInt(1, id); 
-        pState.setString(2, type);
-        ResultSet res = pState.executeQuery();
-        return res;
+            while (res.next()){
+                person.setK_numeroid(res.getInt(1));
+                person.setK_tipo(res.getString(2)); 
+                person.setN_nombre1(res.getString(3)); 
+                person.setN_nombre2(res.getString(4)); 
+                person.setN_apellido1(res.getString(5)); 
+                person.setN_apellido2(res.getString(6)); 
+            }
+        } catch(SQLException e) {
+            throw new CaException("PersonDAO", "No pudo recuperar la persona " + e.getMessage());
+        } 
     }
     
     /* CRUD */
-    public void insertPerson() {
-      try {
-      
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO persona (k_numeroid, k_tipo, n_nombre1, "
-            + "n_nombre2, n_apellido1, n_apellido2 ) values(?,?,?,?,?,?)");
-        
+    public void insertPerson() throws CaException {  
+        try {
+            String strSQL = "INSERT INTO persona (k_numeroid, k_tipo, n_nombre1, "
+                + "n_nombre2, n_apellido1, n_apellido2 ) values(?,?,?,?,?,?)";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setInt(1, person.getK_numeroid());
             pState.setString(2, person.getK_tipo());
             pState.setString(3, person.getN_nombre1());
             pState.setString(4, person.getN_nombre2());
             pState.setString(5, person.getN_apellido1());
             pState.setString(6, person.getN_apellido2());
-            
+
             pState.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      }
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("PersonDAO", "No pudo insertar la persona " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
-    public void updatePerson() {
+    public void updatePerson() throws CaException {
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE persona SET  n_nombre1 = ?, n_nombre2 = ?,"
-                + "n_apellido1 = ?, n_apellido2 = ? WHERE k_numeroid = ? AND k_tipo = ?" );
-            
+            String strSQL = "UPDATE persona SET  n_nombre1 = ?, n_nombre2 = ?,"
+                + "n_apellido1 = ?, n_apellido2 = ? WHERE k_numeroid = ? AND k_tipo = ?";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, person.getN_nombre1());
             pState.setString(2, person.getN_nombre2());
             pState.setString(3, person.getN_apellido1());
             pState.setString(4, person.getN_apellido2());
-            
-            /* Llave compuesta */
             pState.setInt(5, person.getK_numeroid());
             pState.setString(6, person.getK_tipo());
-            
-            pState.executeUpdate();
 
+            pState.executeUpdate();
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
+            throw new CaException( "PersonDAO", "No pudo actualizar la persona " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

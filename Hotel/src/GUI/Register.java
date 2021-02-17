@@ -13,6 +13,9 @@ import Logic.Person;
 import Logic.Phone;
 import DAO.PersonDAO;
 import DAO.PhoneDAO;
+import Database.CaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Register extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -169,7 +172,7 @@ public class Register extends JFrame implements ActionListener {
     }
     
     /* Register */
-    public void register() {
+    public void register() throws CaException {
         name1 = txtName1.getText();
         name2 = txtName2.getText();
         surname1 = txtSurname1.getText();
@@ -191,18 +194,24 @@ public class Register extends JFrame implements ActionListener {
         phone.setK_telefono(phone1);
         phoneDAO.setPerson(person); 
         phoneDAO.setPhone(phone);
+        phoneDAO.insertPhone();
         
         if(phone2 != 0) {
             phone2 = Integer.parseInt(txtPhone2.getText());
             phone.setK_telefono(phone2);  
             phoneDAO.setPhone(phone);
+            phoneDAO.insertPhone();
         }
     }
     
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnRegister) {
-            register();
+            try {
+                register();
+            } catch (CaException ex) {
+                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         if(event.getSource() == btnGoToBack) {

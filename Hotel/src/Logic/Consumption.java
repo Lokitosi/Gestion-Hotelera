@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logic;
 
 /**
  *
  * @author Santiago Galindo
- */
+*/
+
 public class Consumption {
  
     private String k_id_consumo;
@@ -20,7 +16,6 @@ public class Consumption {
     
     
     // Constructor
-    
     public Consumption(){
         
         k_id_consumo = "";
@@ -32,7 +27,6 @@ public class Consumption {
     }
 
     /* Getters */
-    
     public String getK_id_consumo() {
         return k_id_consumo;
     }
@@ -56,6 +50,7 @@ public class Consumption {
     public double getV_valor() {
         return v_valor;
     }
+    
     /* Setters */
     public void setN_nombre(String n_nombre) {
         this.n_nombre = n_nombre;

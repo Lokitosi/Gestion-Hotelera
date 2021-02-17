@@ -1,94 +1,100 @@
 package DAO;
 
-import java.sql.*;
-
-import Data.DBConnection;
-import Logic.Host;
-import Logic.Person;
 /**
  *
  * @author Julian Sanchez
- */
+*/
+
+import java.sql.*;
+
+import Database.*;
+import Logic.Host;
+
 public class HostDAO {
-    
-    private DBConnection connection;
-    private Person person;
     private Host host;
     
     /* Constructor */
-
     public HostDAO() {
-        connection = new DBConnection();
-        person = new Person();
         host = new Host();   
     }
     
     /* Setters */
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
     public void setHost(Host host) {
         this.host = host;
     }
     
     /* Getters */
-    
-    public String getMessage() {
-        return connection.getMessage();
-    }
-    
     public Host getHost() {
         return host;
     }
     
-    public Person getPerson() {
-        return person;
-    }
-    
-    public ResultSet getHostByID(int id,String type) throws SQLException {
-        PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo,"
-                +" f_nacimiento, n_direccion FROM reserva WHERE k_numeroid = ? AND k_tipo = ?");
+    public void getHostByID() throws CaException {
+        try{
+            String strSQL = "SELECT k_numeroid, k_tipo, f_nacimiento, n_direccion FROM reserva WHERE k_numeroid = ? AND k_tipo = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setInt(1, host.getK_numeroid());  
+            pState.setString(2, host.getK_tipo());    
+            
+            ResultSet res = pState.executeQuery();
         
-        pState.setInt(1, id);
-        pState.setString(2,type);
-        ResultSet res = pState.executeQuery();
-        return res;
+            while (res.next()){
+                host.setK_numeroid(res.getInt(1));
+                host.setK_tipo(res.getString(2)); 
+                host.setF_nacimiento(res.getString(3)); 
+                host.setN_direccion(res.getString(4)); 
+            }
+        } catch(SQLException e) {
+            throw new CaException("HostDAO", "No pudo recuperar el huésped " + e.getMessage());
+        }
     }
     
     /* CRUD */
-    public void insertHost() {
-      try {
-      
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO huesped (k_numeroid, k_tipo," 
-                + "f_nacimiento, n_direccion) values (?,?,?,?)");
-        
-            pState.setInt(1, person.getK_numeroid());
-            pState.setString(2, person.getK_tipo());
+    public void insertHost() throws CaException {
+        try {
+            String strSQL = "INSERT INTO huesped (k_numeroid, k_tipo,f_nacimiento, n_direccion) values (?,?,?,?)";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
+            pState.setInt(1, host.getK_numeroid());
+            pState.setString(2, host.getK_tipo());
             pState.setString(3, host.getF_nacimiento());
             pState.setString(4, host.getN_direccion());
-            
+
             pState.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      }
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("HostDAO", "No pudo insertar el huésped " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
-    public void updateHost() {
+    public void updateHost() throws CaException {
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE huesped SET f_nacimiento = ?,"
-                +" n_direccion = ?  WHERE k_numeroid = ? AND k_tipo = ?");
-            
+            String strSQL = "UPDATE huesped SET f_nacimiento = ?, n_direccion = ?  WHERE k_numeroid = ? AND k_tipo = ?";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, host.getF_nacimiento());
             pState.setString(2, host.getN_direccion());
-            
-            pState.setInt(3, person.getK_numeroid());
-            pState.setString(4, person.getK_tipo());
+            pState.setInt(3, host.getK_numeroid());
+            pState.setString(4, host.getK_tipo());
 
             pState.executeUpdate();
-
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
+            throw new CaException("HostDAO", "No pudo actualizar el huésped " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

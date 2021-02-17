@@ -2,16 +2,14 @@ package DAO;
 
 import java.sql.*;
 
-import Data.DBConnection;
+import Database.*;
 import Logic.Reservation;
 
 public class ReservationDAO {
-    private DBConnection connection;
     private Reservation reservation;
     
     /* Constructor */
     public ReservationDAO() {
-        connection = new DBConnection();
         reservation = new Reservation();
     }
     
@@ -21,47 +19,65 @@ public class ReservationDAO {
     }
     
     /* Getters */
-    public String getMessage() {
-        return connection.getMessage();
-    }
-    
     public Reservation getReservation() {
         return reservation;
     }
     
-    public ResultSet getRoomByID(String id) throws SQLException {
-        PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_codigo, f_inicio, q_duracion, "
-                + "i_estado, q_cantPersonas FROM reserva WHERE k_numero = ?");
+    public void getRoomByID() throws CaException { 
+        try{
+            String strSQL = "SELECT k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas FROM reserva WHERE k_numero = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setString(1, reservation.getK_codigo());
+            
+            ResultSet res = pState.executeQuery();
         
-        pState.setString(1, id);  
-        ResultSet res = pState.executeQuery();
-        return res;
+            while (res.next()){
+                reservation.setK_codigo(res.getString(1));
+                reservation.setF_inicio(res.getString(2));
+                reservation.setQ_duracion(res.getInt(3));
+                reservation.setI_estado(res.getString(4));
+                reservation.setQ_cantPersonas(res.getInt(5)); 
+            }
+        } catch(SQLException e) {
+            throw new CaException("ReservationDAO", "No pudo recuperar la reservación " + e.getMessage());
+        } 
     }
     
     /* CRUD */
-    public void insertRoom() {
-      try {
-      
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO reserva (k_codigo, f_inicio, q_duracion, "
-                + "i_estado, q_cantPersonas) values(?,?,?,?,?)");
-        
+    public void insertRoom() throws CaException {
+        try {
+            String strSQL = "INSERT INTO reserva (k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas) values(?,?,?,?,?)";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, reservation.getK_codigo());
             pState.setString(2, reservation.getF_inicio());
             pState.setInt(3, reservation.getQ_duracion());
             pState.setString(4, reservation.getI_estado());
             pState.setInt(5, reservation.getQ_cantPersonas());
-            
+
             pState.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      }
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
+        } catch (SQLException e) {
+            throw new CaException("ReservationDAO", "No pudo insertar la reservación " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
-    public void updateRoom() {
+    public void updateRoom() throws CaException {  
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE reserva SET f_inicio = ?, q_duracion = ?, "
-                    + "i_estado = ?, q_cantPersonas = ? WHERE k_codigo = ?");
-            
+            String strSQL = "UPDATE reserva SET f_inicio = ?, q_duracion = ?, i_estado = ?, q_cantPersonas = ? WHERE k_codigo = ?";
+
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+
             pState.setString(1, reservation.getF_inicio());
             pState.setInt(2, reservation.getQ_duracion());
             pState.setString(3, reservation.getI_estado());
@@ -69,9 +85,13 @@ public class ReservationDAO {
             pState.setString(5, reservation.getK_codigo());
 
             pState.executeUpdate();
-
+            pState.close();
+            
+            ServiceLocator.getInstance().commit();
         } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
+            throw new CaException( "ReservationDAO", "No pudo actualizar la reservación " + e.getMessage());
+        }  finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     
