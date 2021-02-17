@@ -19,7 +19,6 @@ public class Payment {
         return f_pago;
     }
 
-    
     /* Setters */
     public void setK_idPago(String k_idPago) {
         this.k_idPago = k_idPago;
