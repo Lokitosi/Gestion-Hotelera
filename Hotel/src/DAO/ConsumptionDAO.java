@@ -39,11 +39,11 @@ public class ConsumptionDAO {
         return consumption;
     }
     
-    public ResultSet getConsumptionByID(int id) throws SQLException {
+    public ResultSet getConsumptionByID(String id) throws SQLException {
         PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_id_consumo, n_nombre, i_tipo, "
-                + "i_unidad, q_stock, v_valor FROM consumption WHERE k_id_consumo = ?");
+                + "i_unidad, q_stock, v_valor FROM consumo WHERE k_id_consumo = ?");
         
-        pState.setInt(1, id); 
+        pState.setString(1, id); 
         ResultSet res = pState.executeQuery();
         return res;
     }
@@ -52,8 +52,8 @@ public class ConsumptionDAO {
     public void insertConsumption() {
       try {
       
-        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO reserva (k_id_consumo, n_nombre, i_tipo, "
-                + "i_unidad, q_stock, v_valor) values(?,?,?,?,?)");
+        PreparedStatement pState = connection.getConnection().prepareStatement("INSERT INTO consumo(k_id_consumo, n_nombre, i_tipo, "
+                + "i_unidad, q_stock, v_valor) values(?,?,?,?,?.?)");
         
             pState.setString(1, consumption.getK_id_consumo());
             pState.setString(2, consumption.getN_nombre());
@@ -73,13 +73,14 @@ public class ConsumptionDAO {
             PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE consumption SET n_nombre = ?, i_tipo = ?, "
                     + "i_unidad = ?, q_stock = ?, v_valor = ? WHERE k_id_consumo = ?");
             
-            pState.setString(1, consumption.getK_id_consumo());
-            pState.setString(2, consumption.getN_nombre());
-            pState.setString(3, consumption.getI_tipo());
-            pState.setString(4, consumption.getI_unidad());
-            pState.setShort(5, consumption.getQ_stock());
-            pState.setDouble(6, consumption.getV_valor());
-
+            
+            pState.setString(1, consumption.getN_nombre());
+            pState.setString(2, consumption.getI_tipo());
+            pState.setString(3, consumption.getI_unidad());
+            pState.setShort(4, consumption.getQ_stock());
+            pState.setDouble(5, consumption.getV_valor());
+            pState.setString(6, consumption.getK_id_consumo());
+            
             pState.executeUpdate();
 
         } catch (SQLException e) {
