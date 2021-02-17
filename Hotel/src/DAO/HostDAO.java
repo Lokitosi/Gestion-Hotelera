@@ -27,6 +27,10 @@ public class HostDAO {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public void setHost(Host host) {
+        this.host = host;
+    }
     
     /* Getters */
     

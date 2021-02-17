@@ -32,6 +32,14 @@ public class RegisterCIDAO {
     public void setRegisterCI(RegisterCI registerci) {
         this.registerci = registerci;
     }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
     
     /* Getters */
     public String getMessage(){

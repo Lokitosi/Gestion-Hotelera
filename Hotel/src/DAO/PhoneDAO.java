@@ -31,6 +31,10 @@ public class PhoneDAO {
     public void setPhone(Phone phone) {
         this.phone = phone;
     }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
     
     /* Getters */
     public String getMessage() {

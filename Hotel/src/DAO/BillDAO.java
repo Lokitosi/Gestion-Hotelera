@@ -15,9 +15,14 @@ public class BillDAO {
     }
     
     /*Getters*/
+    public String getMessage() {
+        return connection.getMessage();
+    }
+    
     public Bill getBill() {
         return bill;
     }
+    
     /*Setters*/
     public void setBill(Bill bill) {
         this.bill = bill;
@@ -40,7 +45,7 @@ public class BillDAO {
     
     public void updateBill() {
         try {
-            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE bill SET k_idPago = ? WHERE k_cuenta = ?");
+            PreparedStatement pState = connection.getConnection().prepareStatement("UPDATE cuenta SET k_idPago = ? WHERE k_cuenta = ?");
             
             pState.setString(1, bill.getId_Pago());
             pState.executeUpdate();
@@ -50,6 +55,6 @@ public class BillDAO {
         }
     }
     
-    public void deleteRoom() {}
+    public void deleteBill() {}
 }
 
