@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Logic.Person;
+import Logic.Phone;
 import DAO.PersonDAO;
+import DAO.PhoneDAO;
 
 public class Register extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -32,7 +34,9 @@ public class Register extends JFrame implements ActionListener {
     private Start window2;
     
     private Person person;
+    private Phone phone;
     private PersonDAO personDAO;
+    private PhoneDAO phoneDAO;
     
     private String name1;
     private String name2;
@@ -46,7 +50,9 @@ public class Register extends JFrame implements ActionListener {
     /* Constructor */
     public Register() {
         person = new Person();
+        phone = new Phone();
         personDAO = new PersonDAO();
+        phoneDAO = new PhoneDAO();
         
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
@@ -169,7 +175,6 @@ public class Register extends JFrame implements ActionListener {
         surname1 = txtSurname1.getText();
         surname2 = txtSurname2.getText();
         phone1 = Integer.parseInt(txtPhone1.getText());
-        phone2 = Integer.parseInt(txtPhone2.getText());
         document = Integer.parseInt(txtDocument.getText());
         documentType = txtDocumentType.getText();
         
@@ -177,12 +182,21 @@ public class Register extends JFrame implements ActionListener {
         person.setN_nombre2(name2);
         person.setN_apellido1(surname1);
         person.setN_apellido2(surname2);
-        person.setQ_telefono(phone1);
         person.setK_numeroid(document); 
         person.setK_tipo(documentType);
         
         personDAO.setPerson(person);
         personDAO.insertPerson();
+        
+        phone.setK_telefono(phone1);
+        phoneDAO.setPerson(person); 
+        phoneDAO.setPhone(phone);
+        
+        if(phone2 != 0) {
+            phone2 = Integer.parseInt(txtPhone2.getText());
+            phone.setK_telefono(phone2);  
+            phoneDAO.setPhone(phone);
+        }
     }
     
     /* Button actions */

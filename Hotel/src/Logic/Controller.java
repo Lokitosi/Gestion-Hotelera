@@ -4,11 +4,12 @@ package Logic;
  * Initialize the window
 */
 
+import Data.DBConnection;
 import GUI.*;
 
 public class Controller {
     /* Main function */
-    public static void main(String[] args) {  
+    public static void main(String[] args) {          
         Start w1 = new Start();
         //Register w2 = new Register();
         //LogIn w3 = new LogIn();

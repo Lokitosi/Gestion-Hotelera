@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class DBConnection {
     static String bd = "Hotel";
     static String login = "root";
-    static String password = "juliono1999";
-    static String url = "jdbc:mysql://localhost/"+bd;
+    static String password = "doki11122001";
+    static String url = "jdbc:mysql://localhost:2609/"+bd;
     static String message = "";
     
     Connection connection = null;
@@ -21,7 +21,7 @@ public class DBConnection {
     /* Constructor*/
     public DBConnection() {
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.postgresql.jdbc.Driver");
             connection = DriverManager.getConnection(url,login,password);
 
             if (connection!=null){
