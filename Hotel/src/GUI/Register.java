@@ -182,7 +182,7 @@ public class Register extends JFrame implements ActionListener {
         person.setK_tipo(documentType);
         
         personDAO.setPerson(person);
-        personDAO.insertRoom();
+        personDAO.insertPerson();
     }
     
     /* Button actions */

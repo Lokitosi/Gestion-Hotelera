@@ -13,8 +13,8 @@ public class Consumption {
  
     private String k_id_consumo;
     private String n_nombre;
-    private char i_tipo;       
-    private char i_unidad;
+    private String i_tipo;       
+    private String i_unidad;
     private short q_stock;       
     private double v_valor;
     
@@ -25,8 +25,8 @@ public class Consumption {
         
         k_id_consumo = "";
         n_nombre = "";
-        i_tipo = 0;
-        i_unidad = 0;
+        i_tipo = "";
+        i_unidad = "";
         q_stock = 0;
         v_valor = 0;
     }
@@ -49,19 +49,19 @@ public class Consumption {
         this.n_nombre = n_nombre;
     }
 
-    public char getI_tipo() {
+    public String getI_tipo() {
         return i_tipo;
     }
 
-    public void setI_tipo(char i_tipo) {
+    public void setI_tipo(String i_tipo) {
         this.i_tipo = i_tipo;
     }
 
-    public char getI_unidad() {
+    public String getI_unidad() {
         return i_unidad;
     }
 
-    public void setI_unidad(char i_unidad) {
+    public void setI_unidad(String i_unidad) {
         this.i_unidad = i_unidad;
     }
 
