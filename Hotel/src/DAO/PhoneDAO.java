@@ -44,6 +44,10 @@ public class PhoneDAO {
     public Phone getPhone(){
         return phone;
     }
+
+    public Person getPerson() {
+        return person;
+    }
     
     public ResultSet getPhoneByID(int id,String type) throws SQLException {
         PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo,"

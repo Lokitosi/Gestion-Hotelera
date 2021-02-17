@@ -46,8 +46,16 @@ public class RegisterCIDAO {
         return connection.getMessage();
     }
 
-    public RegisterCI getRegisterCi() {
+    public RegisterCI getRegisterCI() {
         return registerci;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public Person getPerson() {
+        return person;
     }
     
     public ResultSet getRegisterCIByID (String id) throws SQLException {

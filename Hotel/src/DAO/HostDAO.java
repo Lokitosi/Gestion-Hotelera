@@ -41,6 +41,10 @@ public class HostDAO {
     public Host getHost() {
         return host;
     }
+
+    public Person getPerson() {
+        return person;
+    }
     
     public ResultSet getHostByID(int id,String type) throws SQLException {
         PreparedStatement pState = connection.getConnection().prepareStatement("SELECT k_numeroid, k_tipo,"
