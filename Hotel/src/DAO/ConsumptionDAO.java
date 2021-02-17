@@ -75,8 +75,8 @@ public class ConsumptionDAO {
             
             pState.setString(1, consumption.getK_id_consumo());
             pState.setString(2, consumption.getN_nombre());
-            pState.setChar(3, consumption.getI_tipo());
-            pState.setChar(4, consumption.getI_unidad());
+            pState.setString(3, consumption.getI_tipo());
+            pState.setString(4, consumption.getI_unidad());
             pState.setShort(5, consumption.getQ_stock());
             pState.setDouble(6, consumption.getV_valor());
 
