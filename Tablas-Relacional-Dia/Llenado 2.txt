@@ -13,9 +13,9 @@ INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H006','T002','d')
 INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H007','T002','d');
 INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H008','T002','d');
 INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H009','T003','d');
-INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H0010','T003','d');
-INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H0011','T003','d');
-INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H0012','T003','d');
+INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H010','T003','d');
+INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H011','T003','d');
+INSERT INTO habitacion (k_numero, k_idtipo, i_estado) VALUES ('H012','T003','d');
 
 INSERT INTO consumo (k_idconsumo, n_nombre, i_tipo, i_unidad, q_stock, v_valor) VALUES ('CP001','Almuerzo','p','U',100,12000);
 INSERT INTO consumo (k_idconsumo, n_nombre, i_tipo, i_unidad, q_stock, v_valor) VALUES ('CP002','Shampoo','p','U',1000,5600);
