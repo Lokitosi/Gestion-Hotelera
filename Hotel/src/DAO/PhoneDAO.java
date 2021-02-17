@@ -46,7 +46,7 @@ public class PhoneDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setInt(1, person.getK_numeroid());  
+            pState.setLong(1, person.getK_numeroid());  
             pState.setString(2, person.getK_tipo());
             
             ResultSet res = pState.executeQuery();
@@ -69,9 +69,9 @@ public class PhoneDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
-            pState.setInt(1, person.getK_numeroid());
+            pState.setLong(1, person.getK_numeroid());
             pState.setString(2, person.getK_tipo());
-            pState.setInt(3, phone.getK_telefono());
+            pState.setLong(3, phone.getK_telefono());
 
             pState.executeUpdate();
             pState.close();

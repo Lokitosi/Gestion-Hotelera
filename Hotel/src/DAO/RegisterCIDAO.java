@@ -84,7 +84,7 @@ public class RegisterCIDAO {
 
             pState.setString(1, registerci.getK_registro());
             pState.setString(2, reservation.getK_codigo());
-            pState.setInt(3, person.getK_numeroid());
+            pState.setLong(3, person.getK_numeroid());
             pState.setString(4, person.getK_tipo());
             pState.setString(6, registerci.getF_inicio());
             pState.setString(7, registerci.getF_salida());
@@ -108,7 +108,7 @@ public class RegisterCIDAO {
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
             pState.setString(1, reservation.getK_codigo());
-            pState.setInt(2, person.getK_numeroid());
+            pState.setLong(2, person.getK_numeroid());
             pState.setString(3, person.getK_tipo());
             pState.setString(4, registerci.getF_inicio());
             pState.setString(5, registerci.getF_salida());

@@ -6,7 +6,7 @@ package Logic;
 */
 
 public class Person {
-    private int k_numeroid; 
+    private long k_numeroid; 
     private String k_tipo;
     private String n_nombre1;
     private String n_nombre2;
@@ -25,7 +25,7 @@ public class Person {
     }
 
     /*GETTERS*/
-    public int getK_numeroid() {
+    public long getK_numeroid() {
         return k_numeroid;
     }
 
@@ -50,7 +50,7 @@ public class Person {
     }
     
     /*SETTERS*/
-    public void setK_numeroid(int k_numeroid) {
+    public void setK_numeroid(long k_numeroid) {
         this.k_numeroid = k_numeroid; 
     }
 

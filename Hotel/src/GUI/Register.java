@@ -8,14 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import Logic.Person;
 import Logic.Phone;
 import DAO.PersonDAO;
 import DAO.PhoneDAO;
 import Database.CaException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Register extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -45,10 +45,12 @@ public class Register extends JFrame implements ActionListener {
     private String name2;
     private String surname1;
     private String surname2;
-    private int phone1;
-    private int phone2;
-    private int document;
+    private long phone1;
+    private long phone2;
+    private long document;
     private String documentType;
+    
+    private boolean canRegister;
     
     /* Constructor */
     public Register() {
@@ -56,6 +58,8 @@ public class Register extends JFrame implements ActionListener {
         phone = new Phone();
         personDAO = new PersonDAO();
         phoneDAO = new PhoneDAO();
+        
+        canRegister = false;
         
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
@@ -183,14 +187,24 @@ public class Register extends JFrame implements ActionListener {
         txtDocumentType.setText("");
     }
     
+    /* Verify text fields */
+    public void verify() {
+        if((!txtName1.getText().equals("")) && (!txtSurname1.getText().equals("")) && (!txtSurname2.getText().equals("")) && 
+                (!txtPhone1.getText().equals("")) && (!txtDocument.getText().equals("")) && (!txtDocumentType.getText().equals(""))) {
+            canRegister = true;
+        } else {
+            canRegister = false;
+        }
+    }
+    
     /* Register */
     public void register() throws CaException {
         name1 = txtName1.getText();
         name2 = txtName2.getText();
         surname1 = txtSurname1.getText();
-        surname2 = txtSurname2.getText();
-        phone1 = Integer.parseInt(txtPhone1.getText());
-        document = Integer.parseInt(txtDocument.getText());
+        surname2 = txtSurname2.getText(); 
+        phone1 = Long.parseLong(txtPhone1.getText());
+        document = Long.parseLong(txtDocument.getText());
         documentType = txtDocumentType.getText();
         
         person.setN_nombre1(name1);
@@ -209,7 +223,7 @@ public class Register extends JFrame implements ActionListener {
         phoneDAO.insertPhone();
         
         if(!txtPhone2.getText().equals("")) {
-            phone2 = Integer.parseInt(txtPhone2.getText());
+            phone2 = Long.parseLong(txtPhone2.getText());
             phone.setK_telefono(phone2);  
             phoneDAO.setPhone(phone);
             phoneDAO.insertPhone();
@@ -219,12 +233,18 @@ public class Register extends JFrame implements ActionListener {
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnRegister) {
-            try {
-                register();
-                clear();
-            } catch (CaException ex) {
-                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            verify();
+            
+            if(canRegister == true) {
+                try {
+                    register();
+                    clear();
+                } catch (CaException ex) {
+                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            } else {
+                System.out.println("Campos vacios");
+            }     
         }
         
         if(event.getSource() == btnGoToBack) {

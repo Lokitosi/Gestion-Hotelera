@@ -37,9 +37,9 @@ public class ReservationDAO {
             while (res.next()){
                 reservation.setK_codigo(res.getString(1));
                 reservation.setF_inicio(res.getString(2));
-                reservation.setQ_duracion(res.getInt(3));
+                reservation.setQ_duracion(res.getShort(3));
                 reservation.setI_estado(res.getString(4));
-                reservation.setQ_cantPersonas(res.getInt(5)); 
+                reservation.setQ_cantPersonas(res.getShort(5)); 
             }
         } catch(SQLException e) {
             throw new CaException("ReservationDAO", "No pudo recuperar la reservación " + e.getMessage());
@@ -56,9 +56,9 @@ public class ReservationDAO {
 
             pState.setString(1, reservation.getK_codigo());
             pState.setString(2, reservation.getF_inicio());
-            pState.setInt(3, reservation.getQ_duracion());
+            pState.setShort(3, reservation.getQ_duracion());
             pState.setString(4, reservation.getI_estado());
-            pState.setInt(5, reservation.getQ_cantPersonas());
+            pState.setShort(5, reservation.getQ_cantPersonas());
 
             pState.executeUpdate();
             pState.close();
@@ -79,9 +79,9 @@ public class ReservationDAO {
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
             pState.setString(1, reservation.getF_inicio());
-            pState.setInt(2, reservation.getQ_duracion());
+            pState.setShort(2, reservation.getQ_duracion());
             pState.setString(3, reservation.getI_estado());
-            pState.setInt(4, reservation.getQ_cantPersonas());
+            pState.setShort(4, reservation.getQ_cantPersonas());
             pState.setString(5, reservation.getK_codigo());
 
             pState.executeUpdate();

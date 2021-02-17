@@ -12,7 +12,7 @@ package Logic;
 public class Phone {
     
     /*ATRIBUTOS*/
-    private int k_telefono;
+    private long k_telefono;
     
     /*CONSTRUCTOR*/
 
@@ -21,12 +21,12 @@ public class Phone {
     }
     
     /*GETTERS*/
-    public int getK_telefono() {
+    public long getK_telefono() {
         return k_telefono;
     }
     
     /*SETTERS*/
-    public void setK_telefono(int k_telefono) {
+    public void setK_telefono(long k_telefono) {
         this.k_telefono = k_telefono;
     }
 }

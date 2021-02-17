@@ -8,9 +8,9 @@ package Logic;
 public class Reservation {
     private String k_codigo;
     private String f_inicio;
-    private int q_duracion;
+    private short q_duracion;
     private String i_estado;
-    private int q_cantPersonas;
+    private short q_cantPersonas;
      
     /* Constructor */
     public Reservation() {
@@ -30,7 +30,7 @@ public class Reservation {
         this.f_inicio = f_start;
     }
     
-    public void setQ_duracion(int q_duration) {
+    public void setQ_duracion(short q_duration) {
         this.q_duracion = q_duration;
     }
  
@@ -38,7 +38,7 @@ public class Reservation {
         this.i_estado = i_state;
     }
     
-    public void setQ_cantPersonas(int q_peopleQuant) {
+    public void setQ_cantPersonas(short q_peopleQuant) {
         this.q_cantPersonas = q_peopleQuant;
     }
     
@@ -51,7 +51,7 @@ public class Reservation {
         return f_inicio;
     }
     
-    public int getQ_duracion() {
+    public short getQ_duracion() {
         return q_duracion;
     }
 
@@ -59,7 +59,7 @@ public class Reservation {
         return i_estado;
     }
     
-    public int getQ_cantPersonas() {
+    public short getQ_cantPersonas() {
         return q_cantPersonas;
     }
 }

@@ -35,7 +35,7 @@ public class HostDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setInt(1, host.getK_numeroid());  
+            pState.setLong(1, host.getK_numeroid());  
             pState.setString(2, host.getK_tipo());    
             
             ResultSet res = pState.executeQuery();
@@ -59,7 +59,7 @@ public class HostDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
-            pState.setInt(1, host.getK_numeroid());
+            pState.setLong(1, host.getK_numeroid());
             pState.setString(2, host.getK_tipo());
             pState.setString(3, host.getF_nacimiento());
             pState.setString(4, host.getN_direccion());
@@ -84,7 +84,7 @@ public class HostDAO {
 
             pState.setString(1, host.getF_nacimiento());
             pState.setString(2, host.getN_direccion());
-            pState.setInt(3, host.getK_numeroid());
+            pState.setLong(3, host.getK_numeroid());
             pState.setString(4, host.getK_tipo());
 
             pState.executeUpdate();

@@ -36,7 +36,7 @@ public class PersonDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setInt(1, person.getK_numeroid());  
+            pState.setLong(1, person.getK_numeroid());  
             pState.setString(2, person.getK_tipo());   
             
             ResultSet res = pState.executeQuery();
@@ -63,7 +63,7 @@ public class PersonDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
-            pState.setInt(1, person.getK_numeroid());
+            pState.setLong(1, person.getK_numeroid());
             pState.setString(2, person.getK_tipo());
             pState.setString(3, person.getN_nombre1());
             pState.setString(4, person.getN_nombre2());
@@ -93,7 +93,7 @@ public class PersonDAO {
             pState.setString(2, person.getN_nombre2());
             pState.setString(3, person.getN_apellido1());
             pState.setString(4, person.getN_apellido2());
-            pState.setInt(5, person.getK_numeroid());
+            pState.setLong(5, person.getK_numeroid());
             pState.setString(6, person.getK_tipo());
 
             pState.executeUpdate();
