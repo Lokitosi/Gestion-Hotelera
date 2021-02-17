@@ -41,7 +41,7 @@ public class HostDAO {
     public Host getHost() {
         return host;
     }
-
+    
     public Person getPerson() {
         return person;
     }
