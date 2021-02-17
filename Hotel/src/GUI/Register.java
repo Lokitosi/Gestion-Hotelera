@@ -171,6 +171,18 @@ public class Register extends JFrame implements ActionListener {
         window2 = new Start(); 
     }
     
+    /* Clear text fields */
+    public void clear() {
+        txtName1.setText("");
+        txtName2.setText("");
+        txtSurname1.setText("");
+        txtSurname2.setText("");
+        txtPhone1.setText("");
+        txtPhone2.setText("");
+        txtDocument.setText("");
+        txtDocumentType.setText("");
+    }
+    
     /* Register */
     public void register() throws CaException {
         name1 = txtName1.getText();
@@ -196,7 +208,7 @@ public class Register extends JFrame implements ActionListener {
         phoneDAO.setPhone(phone);
         phoneDAO.insertPhone();
         
-        if(phone2 != 0) {
+        if(!txtPhone2.getText().equals("")) {
             phone2 = Integer.parseInt(txtPhone2.getText());
             phone.setK_telefono(phone2);  
             phoneDAO.setPhone(phone);
@@ -209,6 +221,7 @@ public class Register extends JFrame implements ActionListener {
         if(event.getSource() == btnRegister) {
             try {
                 register();
+                clear();
             } catch (CaException ex) {
                 Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
             }
