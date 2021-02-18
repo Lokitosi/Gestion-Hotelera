@@ -43,7 +43,9 @@ public class ReservationDAO {
             }
         } catch(SQLException e) {
             throw new CaException("ReservationDAO", "No pudo recuperar la reservación " + e.getMessage());
-        } 
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
     /* CRUD */

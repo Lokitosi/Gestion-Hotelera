@@ -46,6 +46,8 @@ public class HotelDAO {
             }
         } catch(SQLException e) {
             throw new CaException("HotelDAO", "No pudo recuperar el hotel " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

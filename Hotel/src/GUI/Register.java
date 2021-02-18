@@ -239,8 +239,8 @@ public class Register extends JFrame implements ActionListener {
                 try {
                     register();
                     clear();
-                } catch (CaException ex) {
-                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CaException e) {
+                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, e);
                 } 
             } else {
                 System.out.println("Campos vacios");

@@ -58,6 +58,8 @@ public class PhoneDAO {
             }
         } catch(SQLException e) {
             throw new CaException("PhoneDAO", "No pudo recuperar el teléfono " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

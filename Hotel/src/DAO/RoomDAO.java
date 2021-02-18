@@ -40,6 +40,8 @@ public class RoomDAO {
             }
         } catch(SQLException e) {
             throw new CaException("RoomDAO", "No pudo recuperar la habitación " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

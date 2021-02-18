@@ -48,6 +48,8 @@ public class HostDAO {
             }
         } catch(SQLException e) {
             throw new CaException("HostDAO", "No pudo recuperar el huésped " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

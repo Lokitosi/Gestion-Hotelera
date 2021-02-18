@@ -49,6 +49,8 @@ public class ConsumptionDAO {
             }
         } catch(SQLException e) {
             throw new CaException("ConsumptionDAO", "No pudo recuperar el consumo " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

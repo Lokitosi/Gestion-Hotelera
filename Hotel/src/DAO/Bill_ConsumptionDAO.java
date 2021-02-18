@@ -70,6 +70,8 @@ public class Bill_ConsumptionDAO {
             }
         } catch(SQLException e) {
             throw new CaException("Bill_ConsumptionDAO", "No pudo recuperar la cuenta - consumo " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

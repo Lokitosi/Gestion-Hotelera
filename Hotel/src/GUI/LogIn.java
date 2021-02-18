@@ -41,7 +41,6 @@ public class LogIn extends JFrame implements ActionListener {
     /* Constructor */
     public LogIn() {
         person = new Person();
-        personDAO = new PersonDAO();
         
         canLogIn = false;
         
@@ -78,7 +77,7 @@ public class LogIn extends JFrame implements ActionListener {
 	txtDocument.setOpaque(false);
         
         btnLogIn.setIcon(new ImageIcon(("./Images/Log In/Btn Log In.png"))); 
-        btnLogIn.setBounds(872, 545, 330, 80);
+        btnLogIn.setBounds(860, 545, 330, 80);
         btnLogIn.setContentAreaFilled(false);
         btnLogIn.setBorderPainted(false);
         btnLogIn.setOpaque(false); 
@@ -124,10 +123,10 @@ public class LogIn extends JFrame implements ActionListener {
     /* Verify text fields */
     public void verify() {
         if((!txtName.getText().equals("")) && (!txtDocument.getText().equals(""))) {
-            try {
-                logIn();
-            } catch (CaException ex) {
-                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, ex);
+            try {               
+                checkLogIn();
+            } catch (CaException e) {
+                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
             canLogIn = false;
@@ -135,16 +134,16 @@ public class LogIn extends JFrame implements ActionListener {
     }
     
     /* Log in */
-    public void logIn() throws CaException {
+    public void checkLogIn() throws CaException {
+        personDAO = new PersonDAO();
+        
         name = txtName.getText();
         document = Long.parseLong(txtDocument.getText());
-        
-        person.setK_numeroid(document);
-        person.setN_nombre1(name);
         
         personDAO.getPersonByID(document, name);
 
         if(personDAO.getPerson().getK_numeroid() != 0) {
+            person = personDAO.getPerson();
             canLogIn = true;
         } else {
             System.out.println("No registrado");

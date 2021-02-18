@@ -51,7 +51,9 @@ public class PersonDAO {
             }
         } catch(SQLException e) {
             throw new CaException("PersonDAO", "No pudo recuperar la persona " + e.getMessage());
-        } 
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
     }
     
     /* CRUD */

@@ -51,6 +51,8 @@ public class BillDAO {
             }
         } catch(SQLException e) {
             throw new CaException("BillDAO", "No pudo recuperar la cuenta " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

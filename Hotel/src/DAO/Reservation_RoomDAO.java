@@ -52,6 +52,8 @@ public class Reservation_RoomDAO {
             }
         } catch(SQLException e) {
             throw new CaException("Reservation_RoomDAO", "No pudo recuperar la reservación - habitación " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

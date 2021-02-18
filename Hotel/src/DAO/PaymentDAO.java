@@ -40,6 +40,8 @@ public class PaymentDAO {
             }
         } catch(SQLException e) {
             throw new CaException("PaymentDAO", "No pudo recuperar el pago " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

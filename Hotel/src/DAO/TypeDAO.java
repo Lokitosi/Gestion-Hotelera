@@ -41,6 +41,8 @@ public class TypeDAO {
             }
         } catch(SQLException e) {
             throw new CaException("TypeDAO", "No pudo recuperar el tipo de habitación " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     

@@ -71,6 +71,8 @@ public class RegisterCIDAO {
             }
         } catch(SQLException e) {
             throw new CaException("RegisterCIDAO", "No pudo recuperar el registro check in " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
         }
     }
     
