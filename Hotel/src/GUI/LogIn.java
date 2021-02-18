@@ -142,10 +142,13 @@ public class LogIn extends JFrame implements ActionListener {
         person.setK_numeroid(document);
         person.setN_nombre1(name);
         
-        personDAO.setPerson(person);
-        personDAO.getPersonByID();
+        personDAO.getPersonByID(document, name);
 
-        canLogIn = true;
+        if(personDAO.getPerson().getK_numeroid() != 0) {
+            canLogIn = true;
+        } else {
+            System.out.println("No registrado");
+        }
     }
     
     /* Button actions */
