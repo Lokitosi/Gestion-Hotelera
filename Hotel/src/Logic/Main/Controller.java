@@ -4,7 +4,7 @@ package Logic.Main;
  * Initialize the window
 */
 
-import GUI.*;
+import GUI.Start;
 
 public class Controller {
     /* Main function */

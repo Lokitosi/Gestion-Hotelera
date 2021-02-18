@@ -31,13 +31,13 @@ public class PersonDAO {
     public void getPersonByID () throws CaException {
         try{
             String strSQL = "SELECT k_numeroid, k_tipo, n_nombre1, " 
-                +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND k_tipo = ?";
+                +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND n_nombre1 = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
             pState.setLong(1, person.getK_numeroid());  
-            pState.setString(2, person.getK_tipo());   
+            pState.setString(2, person.getN_nombre1());   
             
             ResultSet res = pState.executeQuery();
         
