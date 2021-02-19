@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 public class Searches extends JFrame implements ActionListener {
     /* Graphic variables */
     private JLabel lblBackground;
+    private JLabel lblFilterName;
     
     private JTextField txtName;
     
@@ -20,6 +21,7 @@ public class Searches extends JFrame implements ActionListener {
     private JButton btnReservationName;
     private JButton btnRoomName;
     private JButton btnRoomNumber;
+    private JButton btnSearch;
     
     /* Logic variables */
     private RoomList window2;
@@ -34,6 +36,7 @@ public class Searches extends JFrame implements ActionListener {
         
         // Create components
         lblBackground = new JLabel();
+        lblFilterName = new JLabel("Búsquedas", SwingConstants.CENTER);
         
         txtName = new JTextField();
         
@@ -42,6 +45,7 @@ public class Searches extends JFrame implements ActionListener {
         btnReservationName = new JButton();
         btnRoomName = new JButton();
         btnRoomNumber = new JButton();
+        btnSearch = new JButton();
         
         // Configure components 
         this.setSize(1215, 758);
@@ -52,7 +56,12 @@ public class Searches extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Searches/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        txtName.setBounds(522, 48, 413, 40);
+        lblFilterName.setBounds(206, 18, 205, 50);
+        lblFilterName.setBorder(null);  
+        lblFilterName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblFilterName.setForeground(new Color(24, 24, 24));
+        
+        txtName.setBounds(522, 20, 413, 40);
         txtName.setBorder(null);
         txtName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName.setForeground(new Color(24, 24, 24)); 
@@ -104,7 +113,16 @@ public class Searches extends JFrame implements ActionListener {
         btnRoomNumber.setEnabled(false);
         btnRoomNumber.addActionListener(this);
         
+        btnSearch.setIcon(new ImageIcon(("./Images/Searches/Btn Search.png"))); 
+        btnSearch.setBounds(679, 94, 122, 52);
+        btnSearch.setContentAreaFilled(false);
+        btnSearch.setBorderPainted(false);
+        btnSearch.setOpaque(false); 
+        btnSearch.setFocusable(false);
+        btnSearch.addActionListener(this);
+        
         // Add components 
+        add(btnSearch);
         add(btnGoToBack);
         add(btnRoomNumber);
         add(btnRoomName);
@@ -113,6 +131,7 @@ public class Searches extends JFrame implements ActionListener {
         
         add(txtName);
         
+        add(lblFilterName);
         add(lblBackground);
         
         this.setVisible(true);
@@ -155,6 +174,11 @@ public class Searches extends JFrame implements ActionListener {
         }
     }
     
+    /* Manage filters */
+    public void addFilter(String filterName) {
+        lblFilterName.setText(filterName);
+    }
+    
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnGoToBack) {
@@ -163,6 +187,17 @@ public class Searches extends JFrame implements ActionListener {
         
         if(event.getSource() == btnFilter) {
             showFilters();
+        }
+        
+        if(event.getSource() == btnReservationName) {
+            showFilters();
+            addFilter("Reserva - Nombre");
+        } else if(event.getSource() == btnRoomName) {
+            showFilters();
+            addFilter("Habitación - Nombre");
+        } else if(event.getSource() == btnRoomNumber) {
+            showFilters();
+            addFilter("Habitación - Número");
         }
     }
 }
