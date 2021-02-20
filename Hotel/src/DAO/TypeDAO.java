@@ -3,34 +3,34 @@ package DAO;
 import java.sql.*;
 
 import Database.*;
-import Logic.Type;
+import Logic.RoomType;
 
 public class TypeDAO {
-    private Type type;
+    private RoomType type;
     
     /* Constructor */
     public TypeDAO() {
-        type = new Type();
+        type = new RoomType();
     }
     
     /* Setters */ 
-    public void setType(Type type) {
+    public void setType(RoomType type) {
         this.type = type;
     }
     
     /* Getters */
-    public Type getType() {
+    public RoomType getType() {
         return type;
     }
     
-    public void getTypeByID () throws CaException {
+    public void getTypeByID (String k_idTipo) throws CaException {
         try{
             String strSQL = "SELECT k_idTipo, n_descripcion, v_precio FROM tipo WHERE k_idTipo = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, type.getK_idTipo());    
+            pState.setString(1, k_idTipo);    
             
             ResultSet res = pState.executeQuery();
         

@@ -11,11 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Logic.Person;
-import Logic.Phone;
+import Database.CaException;
 import DAO.PersonDAO;
 import DAO.PhoneDAO;
-import Database.CaException;
+import Logic.Person;
+import Logic.Phone;
 
 public class Register extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -36,28 +36,28 @@ public class Register extends JFrame implements ActionListener {
     /* Logic variables */
     private Start window2;
     
-    private Person person;
-    private Phone phone;
     private PersonDAO personDAO;
     private PhoneDAO phoneDAO;
+    private Person person;
+    private Phone phone; 
     
-    private String name1;
-    private String name2;
-    private String surname1;
-    private String surname2;
-    private long phone1;
-    private long phone2;
-    private long document;
-    private String documentType;
+    private String name1Text;
+    private String name2Text;
+    private String surname1Text;
+    private String surname2Text;
+    private long phone1Text;
+    private long phone2Text;
+    private long documentText;
+    private String documentTypeText;
     
     private boolean canRegister;
     
     /* Constructor */
     public Register() {
-        person = new Person();
-        phone = new Phone();
         personDAO = new PersonDAO();
         phoneDAO = new PhoneDAO();
+        person = new Person();
+        phone = new Phone();
         
         canRegister = false;
         
@@ -83,6 +83,7 @@ public class Register extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null); 
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Register/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
@@ -199,32 +200,32 @@ public class Register extends JFrame implements ActionListener {
     
     /* Register */
     public void register() throws CaException {
-        name1 = txtName1.getText();
-        name2 = txtName2.getText();
-        surname1 = txtSurname1.getText();
-        surname2 = txtSurname2.getText(); 
-        phone1 = Long.parseLong(txtPhone1.getText());
-        document = Long.parseLong(txtDocument.getText());
-        documentType = txtDocumentType.getText();
+        name1Text = txtName1.getText();
+        name2Text = txtName2.getText();
+        surname1Text = txtSurname1.getText();
+        surname2Text = txtSurname2.getText(); 
+        phone1Text = Long.parseLong(txtPhone1.getText());
+        documentText = Long.parseLong(txtDocument.getText());
+        documentTypeText = txtDocumentType.getText();
         
-        person.setN_nombre1(name1);
-        person.setN_nombre2(name2);
-        person.setN_apellido1(surname1);
-        person.setN_apellido2(surname2);
-        person.setK_numeroid(document); 
-        person.setK_tipo(documentType);
+        person.setN_nombre1(name1Text);
+        person.setN_nombre2(name2Text);
+        person.setN_apellido1(surname1Text);
+        person.setN_apellido2(surname2Text);
+        person.setK_numeroid(documentText); 
+        person.setK_tipo(documentTypeText);
         
         personDAO.setPerson(person);
         personDAO.insertPerson();
         
-        phone.setK_telefono(phone1);
+        phone.setK_telefono(phone1Text);
         phoneDAO.setPerson(person); 
         phoneDAO.setPhone(phone);
         phoneDAO.insertPhone();
         
         if(!txtPhone2.getText().equals("")) {
-            phone2 = Long.parseLong(txtPhone2.getText());
-            phone.setK_telefono(phone2);  
+            phone2Text = Long.parseLong(txtPhone2.getText());
+            phone.setK_telefono(phone2Text);  
             phoneDAO.setPhone(phone);
             phoneDAO.insertPhone();
         }

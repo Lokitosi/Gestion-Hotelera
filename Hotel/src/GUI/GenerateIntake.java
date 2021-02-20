@@ -12,6 +12,11 @@ import java.awt.event.ActionListener;
 public class GenerateIntake extends JFrame implements ActionListener {
     /* Graphic variables */
     private JLabel lblBackground;
+    private JLabel lblRoomImage;
+    private JLabel lblNumber;
+    private JLabel lblType;
+    private JLabel lblDescription;
+    private JLabel lblPrice;
     
     private JTextField txtQuantity;
     private JTextField txtProductName;
@@ -32,6 +37,11 @@ public class GenerateIntake extends JFrame implements ActionListener {
         
         // Create components
         lblBackground = new JLabel();
+        lblRoomImage = new JLabel();
+        lblNumber = new JLabel("", SwingConstants.CENTER);
+        lblType = new JLabel("", SwingConstants.CENTER);
+        lblDescription = new JLabel("", SwingConstants.CENTER);
+        lblPrice = new JLabel("", SwingConstants.CENTER);
         
         txtQuantity = new JTextField("", SwingConstants.CENTER);
         txtProductName = new JTextField();
@@ -48,9 +58,37 @@ public class GenerateIntake extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null); 
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Generate Intake/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
+        
+        lblRoomImage.setIcon(new ImageIcon(("./Images/Reservation/Lbl Room Image.png"))); 
+        lblRoomImage.setBounds(76, 165, 245, 222);
+        
+        lblNumber.setBounds(210, 429, 150, 30);
+        lblNumber.setBorder(null); 
+        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblNumber.setForeground(new Color(24, 24, 24)); 
+	lblNumber.setOpaque(false);
+        
+        lblType.setBounds(105, 479, 255, 30);
+        lblType.setBorder(null);
+        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblType.setForeground(new Color(24, 24, 24)); 
+	lblType.setOpaque(false);
+        
+        lblDescription.setBounds(195, 529, 165, 30);
+        lblDescription.setBorder(null);
+        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDescription.setForeground(new Color(24, 24, 24)); 
+	lblDescription.setOpaque(false);
+        
+        lblPrice.setBounds(195, 579, 165, 30);
+        lblPrice.setBorder(null);
+        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblPrice.setForeground(new Color(24, 24, 24)); 
+	lblPrice.setOpaque(false);
         
         txtQuantity.setBounds(1100, 171, 54, 40);
         txtQuantity.setBorder(null);
@@ -119,6 +157,11 @@ public class GenerateIntake extends JFrame implements ActionListener {
         add(txtPrice);
         add(txtStock);
         
+        add(lblPrice);
+        add(lblType);
+        add(lblDescription);
+        add(lblNumber);
+        add(lblRoomImage);
         add(lblBackground);
         
         this.setVisible(true);

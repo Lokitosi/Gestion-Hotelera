@@ -5,14 +5,14 @@ package Logic;
  * @author andre
 */
 
-public class Type {
+public class RoomType {
     private String k_idTipo;
     private String n_descripcion;
     private Double v_precio;
     
     
     /* Constructor */
-   public Type(){
+   public RoomType(){
        k_idTipo = "";
        n_descripcion = "";
        v_precio = 0.0;

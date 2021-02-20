@@ -7,6 +7,12 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Database.CaException;
+import DAO.HotelDAO;
+import Logic.Hotel;
 
 public class Start extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -21,8 +27,17 @@ public class Start extends JFrame implements ActionListener {
     private LogIn window3; 
     private CheckIn window4; 
     
+    private HotelDAO hotelDAO;
+    public static Hotel hotel;
+    
     /* Constructor */
     public Start() {
+        try {               
+            addHotel();
+        } catch (CaException e) {
+            Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
         // Create components
@@ -37,6 +52,7 @@ public class Start extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null); 
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Start/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
@@ -90,6 +106,16 @@ public class Start extends JFrame implements ActionListener {
         this.dispose();
         window4 = new CheckIn();
     }
+    
+    /* Register hotel */
+    public void addHotel() throws CaException {
+        hotelDAO = new HotelDAO();
+        
+        hotelDAO.getHotelByID("HT001");
+        
+        hotel = hotelDAO.getHotel();
+    }
+    
     
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 

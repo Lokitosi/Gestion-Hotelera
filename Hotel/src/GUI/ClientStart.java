@@ -8,7 +8,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import Database.CaException;
+import DAO.TypeDAO;
+import DAO.RoomDAO;
+import Logic.RoomType;
+import Logic.Room;
 
 public class ClientStart extends JFrame implements ActionListener {
     /* Graphic variables */ 
@@ -22,6 +30,7 @@ public class ClientStart extends JFrame implements ActionListener {
     private JButton btnSimple;
     private JButton btnDouble;
     private JButton btnTriple;
+    private ArrayList<JButton> btnReservateList;
     
     private JPanel pnlAllRooms;
     
@@ -32,11 +41,23 @@ public class ClientStart extends JFrame implements ActionListener {
     private Profile window2;
     private Reservation window3;
     
+    private TypeDAO typeDAO;
+    private RoomDAO roomDAO;
+    public static ArrayList<RoomType> typeList;
+    public static ArrayList<Room> roomList;
+    
+    private String roomTypeText;
+    private int roomNumStart;
     private int filterState;
     private int roomPanelPos;
     
     /* Constructor */
     public ClientStart() {
+        typeDAO = new TypeDAO();
+        roomDAO = new RoomDAO();
+        typeList = new ArrayList<>(); 
+        roomList = new ArrayList<>(); 
+        
         filterState = 1;
         roomPanelPos = 5;
         
@@ -53,6 +74,7 @@ public class ClientStart extends JFrame implements ActionListener {
         btnSimple = new JButton();
         btnDouble = new JButton();
         btnTriple = new JButton();
+        btnReservateList = new ArrayList<>(); 
         
         pnlAllRooms = new JPanel();
         
@@ -63,6 +85,7 @@ public class ClientStart extends JFrame implements ActionListener {
         this.setSize(1215, 758);
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Client Start/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
@@ -194,19 +217,45 @@ public class ClientStart extends JFrame implements ActionListener {
     /* Manage filters */
     public void addFilter(String filterName) {
         lblFilterName.setText("         " + filterName);
+        //deleteRooms();
         
-        createRoom();
+        try {
+            for(int i = roomNumStart; i < (roomNumStart + roomDAO.getAllRoomsByType(roomTypeText)); i++) {
+                if(Integer.toString(roomNumStart).length() == 1) {
+                    addRoomInfo("H00" + Integer.toString(i));
+                } else if(Integer.toString(roomNumStart).length() == 2) {
+                    addRoomInfo("H0" + Integer.toString(i));
+                } else if(Integer.toString(roomNumStart).length() == 3) {
+                    addRoomInfo("H" + Integer.toString(i));
+                }
+            }
+        } catch (CaException e) {
+            Logger.getLogger(ClientStart.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
-    /* Create room elements */
-    public void createRoom() {
+    /* Manage rooms */
+    public void addRoomInfo(String roomNumber) throws CaException {
+        typeDAO.getTypeByID(roomTypeText);
+        roomDAO.getRoomByID(roomNumber);
+        
+        RoomType roomType = typeDAO.getType();
+        Room room  = roomDAO.getRoom();
+        
+        typeList.add(roomType);
+        roomList.add(room);
+
+        createRoom(roomType, room);
+    }
+    
+    public void createRoom(RoomType type, Room room) {
         // Create components
         JLabel lblRoomImage = new JLabel();
         JLabel lblRoomInfo = new JLabel();
-        JLabel txtNumber = new JLabel("", SwingConstants.CENTER);
-        JLabel txtType = new JLabel("", SwingConstants.CENTER);
-        JLabel txtDescription = new JLabel("", SwingConstants.CENTER);
-        JLabel txtPrice = new JLabel("", SwingConstants.CENTER);
+        JLabel lblNumber = new JLabel(room.getK_numero(), SwingConstants.CENTER);
+        JLabel lblType = new JLabel(type.getK_idTipo(), SwingConstants.CENTER);
+        JLabel lblDescription = new JLabel(type.getN_descripcion(), SwingConstants.CENTER);
+        JLabel lblPrice = new JLabel("$" + type.getV_precio(), SwingConstants.CENTER);
         
         JButton btnReservate = new JButton(); 
         
@@ -220,29 +269,29 @@ public class ClientStart extends JFrame implements ActionListener {
         lblRoomInfo.setIcon(new ImageIcon(("./Images/Client Start/Lbl Room Info.png"))); 
         lblRoomInfo.setBounds(-5, 0, 355, 222);
         
-        txtNumber.setBounds(190, 25, 150, 30);
-        txtNumber.setBorder(null);
-        txtNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-        txtNumber.setForeground(new Color(24, 24, 24)); 
-	txtNumber.setOpaque(false);
+        lblNumber.setBounds(190, 25, 150, 30);
+        lblNumber.setBorder(null);
+        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblNumber.setForeground(new Color(24, 24, 24)); 
+	lblNumber.setOpaque(false);
         
-        txtType.setBounds(85, 75, 255, 30);
-        txtType.setBorder(null);
-        txtType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-        txtType.setForeground(new Color(24, 24, 24)); 
-	txtType.setOpaque(false);
+        lblType.setBounds(85, 75, 255, 30);
+        lblType.setBorder(null);
+        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblType.setForeground(new Color(24, 24, 24)); 
+	lblType.setOpaque(false);
         
-        txtDescription.setBounds(175, 125, 165, 30);
-        txtDescription.setBorder(null);
-        txtDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-        txtDescription.setForeground(new Color(24, 24, 24)); 
-	txtDescription.setOpaque(false);
+        lblDescription.setBounds(175, 125, 165, 30);
+        lblDescription.setBorder(null);
+        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDescription.setForeground(new Color(24, 24, 24)); 
+	lblDescription.setOpaque(false);
         
-        txtPrice.setBounds(175, 175, 165, 30);
-        txtPrice.setBorder(null);
-        txtPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
-        txtPrice.setForeground(new Color(24, 24, 24)); 
-	txtPrice.setOpaque(false);
+        lblPrice.setBounds(175, 175, 165, 30);
+        lblPrice.setBorder(null);
+        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblPrice.setForeground(new Color(24, 24, 24)); 
+	lblPrice.setOpaque(false);
         
         btnReservate.setIcon(new ImageIcon(("./Images/Client Start/Btn Reservate.png"))); 
         btnReservate.setBounds(157, 240, 210, 85);
@@ -261,10 +310,10 @@ public class ClientStart extends JFrame implements ActionListener {
         pnlRoom.setOpaque(false);
         
         // Add components 
-        pnlRoomInfo.add(txtPrice);
-        pnlRoomInfo.add(txtDescription);
-        pnlRoomInfo.add(txtType);
-        pnlRoomInfo.add(txtNumber); 
+        pnlRoomInfo.add(lblPrice);
+        pnlRoomInfo.add(lblDescription);
+        pnlRoomInfo.add(lblType);
+        pnlRoomInfo.add(lblNumber); 
         pnlRoomInfo.add(lblRoomInfo);
         
         pnlRoom.add(pnlRoomInfo);
@@ -276,7 +325,18 @@ public class ClientStart extends JFrame implements ActionListener {
         scpRooms.setViewportView(pnlAllRooms);
         scpRooms.getViewport().setOpaque(false);
         
+        btnReservateList.add(btnReservate);
+        
         roomPanelPos += 700;
+    }
+    
+    public void deleteRooms() {
+        typeList.removeAll(typeList);
+        roomList.removeAll(roomList);
+        
+        pnlAllRooms.removeAll();
+        pnlAllRooms.revalidate();
+        pnlAllRooms.repaint();
     }
     
     /* Button actions */
@@ -290,18 +350,26 @@ public class ClientStart extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnSimple) {
+            roomNumStart = 1;
+            roomTypeText = "T001";
             showFilters();
             addFilter("Simple");
         } else if(event.getSource() == btnDouble) {
+            roomNumStart = 5;
+            roomTypeText = "T002";
             showFilters();
             addFilter("Doble");
         } else if(event.getSource() == btnTriple) {
+            roomNumStart = 9;
+            roomTypeText = "T003";
             showFilters();
             addFilter("Triple");
         }
         
-        /*if(event.getSource() == btnReservate) {
-            goToReservation();
-        }*/
+        for(int i = 0; i < btnReservateList.size(); i++) {
+            if(event.getSource() == btnReservateList.get(i)) {
+                goToReservation();
+            }
+        }      
     }
 }

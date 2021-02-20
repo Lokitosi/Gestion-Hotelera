@@ -23,7 +23,7 @@ public class ReservationDAO {
         return reservation;
     }
     
-    public void getRoomByID() throws CaException { 
+    public void getReservationByID() throws CaException { 
         try{
             String strSQL = "SELECT k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas FROM reserva WHERE k_numero = ?";
             
@@ -49,7 +49,7 @@ public class ReservationDAO {
     }
     
     /* CRUD */
-    public void insertRoom() throws CaException {
+    public void insertReservation() throws CaException {
         try {
             String strSQL = "INSERT INTO reserva (k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas) values(?,?,?,?,?)";
 
@@ -73,7 +73,7 @@ public class ReservationDAO {
         }
     }
     
-    public void updateRoom() throws CaException {  
+    public void updateReservation() throws CaException {  
         try {
             String strSQL = "UPDATE reserva SET f_inicio = ?, q_duracion = ?, i_estado = ?, q_cantPersonas = ? WHERE k_codigo = ?";
 
@@ -97,5 +97,5 @@ public class ReservationDAO {
         }
     }
     
-    public void deleteRoom() {}
+    public void deleteReservation() {}
 }

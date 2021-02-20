@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Logic.Person;
-import DAO.PersonDAO;
 import Database.CaException;
+import DAO.PersonDAO;
+import Logic.Person;
 
 public class LogIn extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -30,11 +30,11 @@ public class LogIn extends JFrame implements ActionListener {
     private ClientStart window3;
     private RoomList window4;
     
-    private Person person;
     private PersonDAO personDAO;
+    public static Person person;
     
-    private String name;
-    private long document;
+    private String nameText;
+    private long documentText;
     
     private boolean canLogIn;
     
@@ -60,6 +60,7 @@ public class LogIn extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null); 
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Log In/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
@@ -137,10 +138,10 @@ public class LogIn extends JFrame implements ActionListener {
     public void checkLogIn() throws CaException {
         personDAO = new PersonDAO();
         
-        name = txtName.getText();
-        document = Long.parseLong(txtDocument.getText());
+        nameText = txtName.getText();
+        documentText = Long.parseLong(txtDocument.getText());
         
-        personDAO.getPersonByID(document, name);
+        personDAO.getPersonByID(documentText, nameText);
 
         if(personDAO.getPerson().getK_numeroid() != 0) {
             person = personDAO.getPerson();
@@ -155,7 +156,7 @@ public class LogIn extends JFrame implements ActionListener {
         if(event.getSource() == btnLogIn) {
             verify();
             
-            if(personDAO.getPerson().getK_numeroid() == 1234 && personDAO.getPerson().getN_nombre1().equals("Admin")) {
+            if(person.getK_numeroid() == 1234 && person.getN_nombre1().equals("Admin")) {
                 goToRoomList();
             } else if(canLogIn == true) {
                 goToClientStart(); 

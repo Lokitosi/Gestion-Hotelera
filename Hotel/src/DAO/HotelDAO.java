@@ -28,14 +28,14 @@ public class HotelDAO {
         return hotel;
     }
     
-    public void getHotelByID() throws CaException {
+    public void getHotelByID(String k_idHotel) throws CaException {
         try{
             String strSQL = "SELECT k_idHotel, t_descuento, q_restriccionAforo FROM hotel WHERE k_idHotel = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, hotel.getK_idHotel());    
+            pState.setString(1, k_idHotel);    
             
             ResultSet res = pState.executeQuery();
         

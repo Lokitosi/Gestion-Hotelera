@@ -36,6 +36,7 @@ public class Report extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null); 
         this.setLocationRelativeTo(null);
         this.isDisplayable();
+        this.setResizable(false);
         
         lblBackground.setIcon(new ImageIcon(("./Images/Report/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
