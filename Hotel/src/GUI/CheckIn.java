@@ -4,10 +4,27 @@ package GUI;
  * 8th window
 */
 
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter; 
+
+import DAO.HostDAO;
+import DAO.PersonDAO;
+import DAO.PhoneDAO;
+import DAO.RegisterCIDAO;
+import DAO.ReservationDAO;
+import Database.CaException;
+import Logic.Host;
+import Logic.Person;
+import Logic.Phone;
+import Logic.Reservation;
+import Logic.RegisterCI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CheckIn extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -26,6 +43,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private JTextField txtDate; 
     private JTextField txtReserverDocument; 
     private JTextField txtDays; 
+    private JTextField txtReservationCode;
     
     private JButton btnCheckIn;
     private JButton btnGoToBack;
@@ -37,8 +55,53 @@ public class CheckIn extends JFrame implements ActionListener {
     /* Logic variables */
     private Start window2;
     
+    private PersonDAO personDAO;
+    private PhoneDAO phoneDAO;
+    private ReservationDAO reservationDAO;
+    private RegisterCIDAO registerCIDAO;
+    private HostDAO hostDAO;
+    private Person person;
+    private Person reserver;
+    private Phone phone;
+    private Reservation reservation;
+    private RegisterCI registerci;
+    private Host host;
+    
+    private String name1Text;
+    private String name2Text;
+    private String surname1Text;
+    private String surname2Text;
+    private long phone1Text;
+    private long phone2Text;
+    private long documentText;
+    private String documentTypeText;
+    private String directionText;
+    private String dateText;
+    private long reserverDocumentText;
+    private long daysText;
+    private String reservationCodeText;
+    
+    private boolean makeCheckIn;
+    private boolean canPass;
+    
+    
     /* Constructor */
     public CheckIn() {
+        personDAO = new PersonDAO();
+        phoneDAO = new PhoneDAO();
+        reservationDAO = new ReservationDAO();
+        registerCIDAO = new RegisterCIDAO();
+        hostDAO = new HostDAO();
+        person = new Person();
+        reserver = new Person();
+        phone = new Phone();
+        reservation = new Reservation();
+        registerci = new RegisterCI();
+        host = new Host();
+        
+        makeCheckIn = false;
+        canPass = false;
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
         // Create components
@@ -241,14 +304,174 @@ public class CheckIn extends JFrame implements ActionListener {
         pnlScreen2.setEnabled(false);
     }
     
+    /* Clear text fields */
+    public void clear() {
+        txtName1.setText("");
+        txtName2.setText("");
+        txtSurname1.setText("");
+        txtSurname2.setText("");
+        txtPhone1.setText("");
+        txtPhone2.setText("");
+        txtDocument.setText("");
+        txtDocumentType.setText("");
+        txtDirection.setText("");
+        txtDate.setText("");
+        txtReserverDocument.setText("");
+        txtDays.setText("");
+        txtReservationCode.setText(""); //
+    }
+    
+    /* Verify text fields in the Backward */
+    public void verifyInformation() {
+        if((!txtName1.getText().equals("")) && (!txtSurname1.getText().equals("")) && (!txtSurname2.getText().equals("")) && 
+                (!txtPhone1.getText().equals("")) && (!txtDocument.getText().equals("")) && (!txtDocumentType.getText().equals(""))) {
+            canPass = true;
+        } else {
+            canPass = false;
+        }
+    }
+    
+    /* Verify text fields in the Forward */
+    public void verifyReservation(){
+        if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals("")) && (!txtDays.getText().equals(""))){
+            if ((!txtReservationCode.getText().equals("")) || (!txtReserverDocument.getText().equals(""))){
+                makeCheckIn = true;
+            }
+        } else {
+            makeCheckIn = false;
+        }
+    }    
+    
+    /* "Check in", on Backward */
+    public void checkInFirstPart() throws CaException {
+        name1Text = txtName1.getText();
+        name2Text = txtName2.getText();
+        surname1Text = txtSurname1.getText();
+        surname2Text = txtSurname2.getText(); 
+        phone1Text = Long.parseLong(txtPhone1.getText());
+        documentText = Long.parseLong(txtDocument.getText());
+        documentTypeText = txtDocumentType.getText();
+        
+        person.setN_nombre1(name1Text);
+        person.setN_nombre2(name2Text);
+        person.setN_apellido1(surname1Text);
+        person.setN_apellido2(surname2Text);
+        person.setK_numeroid(documentText); 
+        person.setK_tipo(documentTypeText);
+        
+        personDAO.setPerson(person);
+        personDAO.insertPerson();
+        
+        host.setK_numeroid(documentText);
+        host.setK_tipo(documentTypeText);
+        
+        hostDAO.setHost(host);
+        //hostDAO.insertHost();
+        
+        phone.setK_telefono(phone1Text);
+        phoneDAO.setPerson(person); 
+        phoneDAO.setPhone(phone);
+        phoneDAO.insertPhone();
+        
+        if(!txtPhone2.getText().equals("")) {
+            phone2Text = Long.parseLong(txtPhone2.getText());
+            phone.setK_telefono(phone2Text);  
+            phoneDAO.setPhone(phone);
+            phoneDAO.insertPhone();
+        }
+    }
+    
+    /* "Check in" on Forward */
+    public void checkInLastPart() throws CaException {
+        directionText = txtDirection.getText();
+        dateText = txtDate.getText();
+        reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
+        daysText = Long.parseLong(txtDays.getText());
+        //reservationCodeText = Long.parseLong(txtReservationCode.getText());
+        //bornDateText = txtBornDate.getText();
+        
+        //host.setF_nacimiento(bornDateText);
+        host.setN_direccion(directionText);
+        
+        hostDAO.setHost(host);
+        hostDAO.insertHost();
+        
+        reserver.setK_numeroid(reserverDocumentText);
+        
+        //reservationDAO.setPerson(reserver);
+        reservationDAO.setReservation(reservation);
+        
+        //reservation.setK_codigo(reservationCodeText);
+        
+        registerci.setF_inicio(dateText);
+        registerci.setF_salida(calculeDate(dateText, daysText));
+        
+        registerCIDAO.setPerson(person);
+        registerCIDAO.setReservation(reservation);
+        registerCIDAO.setRegisterCI(registerci);
+        registerCIDAO.insertRegisterCI();
+        
+}
+    
+    /* Give date from his out */
+    public String calculeDate (String date, long days){
+        
+        char[] dateArray;
+        dateArray = date.toCharArray();
+        String dayString, monthString, yearString;
+        
+        int day, month, year;
+        int d=0, m=0, y=0;
+        
+        char[] dayChar = new char[2];
+        char[] monthChar = new char[2];
+        char[] yearChar = new char[4];
+        
+        for (int i = 0 ; i < date.length(); i++){
+            if ( i < 2 ){
+                dayChar[d] = dateArray[i];
+                d++;
+            } else if ( i > 2 && i < 5){
+                monthChar[m] = dateArray[i];
+                m++;
+            } else if (i > 5){
+                yearChar[y] = dateArray[i];
+                y++;
+            }
+        }
+        
+        dayString = String.valueOf(dayChar);
+        monthString = String.valueOf(monthChar);
+        yearString = String.valueOf(yearChar);
+        
+        day = Integer.valueOf(dayString);
+        month = Integer.valueOf(monthString);
+        year = Integer.valueOf(yearString);
+        
+        LocalDate dateIn = LocalDate.of(year,month,day);
+        LocalDate dateOut = dateIn.plus(4,ChronoUnit.DAYS);
+        
+        DateTimeFormatter formatDateSQL = DateTimeFormatter.ofPattern("dd'/'MM'/'yyyy");
+        String dateOutString = dateOut.format(formatDateSQL);
+        
+        return dateOutString;
+    }
+    
+  
     /* Button actions */
-    public void actionPerformed(ActionEvent event) { 
+    public void actionPerformed(ActionEvent event) {
         if(event.getSource() == btnGoForward) {
-            goForward();
+            verifyInformation();
+            
+           if (canPass = true){       
+                goForward();      
+            }
         }
         
         if(event.getSource() == btnGoToBack && pnlScreen1.isEnabled()== true) {
+            clear();
             goToStart();
+            
         } 
         
         if(event.getSource() == btnGoToBack && pnlScreen2.isEnabled() == true) {
@@ -256,7 +479,19 @@ public class CheckIn extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnCheckIn) {
+            verifyReservation();
             
+            if (makeCheckIn = true){
+                try {
+                    checkInFirstPart();
+                    checkInLastPart();
+                    clear();
+                } catch (CaException e ) {
+                    Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
+                }
+            } else {
+                System.out.println("Campos vacios");
+            }
         }
     }
 }
