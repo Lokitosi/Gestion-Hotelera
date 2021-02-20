@@ -47,6 +47,7 @@ public class ClientStart extends JFrame implements ActionListener {
     public static ArrayList<Room> roomList;
     
     private String roomTypeText;
+    private int roomCant;
     private int roomNumStart;
     private int filterState;
     private int roomPanelPos;
@@ -57,7 +58,7 @@ public class ClientStart extends JFrame implements ActionListener {
         roomDAO = new RoomDAO();
         typeList = new ArrayList<>(); 
         roomList = new ArrayList<>(); 
-        
+
         filterState = 1;
         roomPanelPos = 5;
         
@@ -142,6 +143,7 @@ public class ClientStart extends JFrame implements ActionListener {
         btnTriple.addActionListener(this);
         
         pnlAllRooms.setBounds(13, 257, 1174, 400);
+        pnlAllRooms.setPreferredSize(new Dimension(roomCant * 700, 400));
         pnlAllRooms.setLayout(null);
         pnlAllRooms.setOpaque(false);
         
@@ -216,8 +218,9 @@ public class ClientStart extends JFrame implements ActionListener {
     
     /* Manage filters */
     public void addFilter(String filterName) {
+        roomCant = 0;
         lblFilterName.setText("         " + filterName);
-        //deleteRooms();
+        deleteRooms();
         
         try {
             for(int i = roomNumStart; i < (roomNumStart + roomDAO.getAllRoomsByType(roomTypeText)); i++) {
@@ -227,11 +230,14 @@ public class ClientStart extends JFrame implements ActionListener {
                     addRoomInfo("H0" + Integer.toString(i));
                 } else if(Integer.toString(roomNumStart).length() == 3) {
                     addRoomInfo("H" + Integer.toString(i));
-                }
+                } 
+                roomCant += 1;
             }
         } catch (CaException e) {
             Logger.getLogger(ClientStart.class.getName()).log(Level.SEVERE, null, e);
         }
+        
+        pnlAllRooms.setPreferredSize(new Dimension(roomCant * 700, 400));
     }
     
     /* Manage rooms */
@@ -307,7 +313,7 @@ public class ClientStart extends JFrame implements ActionListener {
         
         pnlRoom.setBounds(roomPanelPos, 15, 645, 335);
         pnlRoom.setLayout(null);
-        pnlRoom.setOpaque(false);
+        pnlRoom.setOpaque(false);     
         
         // Add components 
         pnlRoomInfo.add(lblPrice);
@@ -336,7 +342,8 @@ public class ClientStart extends JFrame implements ActionListener {
         
         pnlAllRooms.removeAll();
         pnlAllRooms.revalidate();
-        pnlAllRooms.repaint();
+        
+        roomPanelPos = 5;
     }
     
     /* Button actions */
