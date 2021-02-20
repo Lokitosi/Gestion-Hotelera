@@ -43,10 +43,13 @@ public class ClientStart extends JFrame implements ActionListener {
     
     private TypeDAO typeDAO;
     private RoomDAO roomDAO;
-    public static ArrayList<RoomType> typeList;
-    public static ArrayList<Room> roomList;
+    private ArrayList<RoomType> typeList;
+    private ArrayList<Room> roomList;
+    public static RoomType typeSelected;
+    public static Room roomSelected;
     
     private String roomTypeText;
+    public static String typeConversion;
     private int roomCant;
     private int roomNumStart;
     private int filterState;
@@ -224,13 +227,23 @@ public class ClientStart extends JFrame implements ActionListener {
         
         try {
             for(int i = roomNumStart; i < (roomNumStart + roomDAO.getAllRoomsByType(roomTypeText)); i++) {
-                if(Integer.toString(roomNumStart).length() == 1) {
-                    addRoomInfo("H00" + Integer.toString(i));
-                } else if(Integer.toString(roomNumStart).length() == 2) {
-                    addRoomInfo("H0" + Integer.toString(i));
-                } else if(Integer.toString(roomNumStart).length() == 3) {
-                    addRoomInfo("H" + Integer.toString(i));
-                } 
+                switch (Integer.toString(i).length()) {
+                    case 1:
+                        addRoomInfo("H00" + Integer.toString(i));
+                        break;
+                        
+                    case 2:
+                        addRoomInfo("H0" + Integer.toString(i));
+                        break;
+                        
+                    case 3: 
+                        addRoomInfo("H" + Integer.toString(i));
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
                 roomCant += 1;
             }
         } catch (CaException e) {
@@ -255,11 +268,19 @@ public class ClientStart extends JFrame implements ActionListener {
     }
     
     public void createRoom(RoomType type, Room room) {
+        if(type.getK_idTipo().equals("T001")) {
+            typeConversion = "Simple";
+        } else if(type.getK_idTipo().equals("T002")) {
+            typeConversion = "Doble";
+        } else if(type.getK_idTipo().equals("T003")) {
+            typeConversion = "Triple";
+        }
+        
         // Create components
         JLabel lblRoomImage = new JLabel();
         JLabel lblRoomInfo = new JLabel();
         JLabel lblNumber = new JLabel(room.getK_numero(), SwingConstants.CENTER);
-        JLabel lblType = new JLabel(type.getK_idTipo(), SwingConstants.CENTER);
+        JLabel lblType = new JLabel(typeConversion, SwingConstants.CENTER);
         JLabel lblDescription = new JLabel(type.getN_descripcion(), SwingConstants.CENTER);
         JLabel lblPrice = new JLabel("$" + type.getV_precio(), SwingConstants.CENTER);
         
@@ -277,25 +298,25 @@ public class ClientStart extends JFrame implements ActionListener {
         
         lblNumber.setBounds(190, 25, 150, 30);
         lblNumber.setBorder(null);
-        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblNumber.setForeground(new Color(24, 24, 24)); 
 	lblNumber.setOpaque(false);
         
         lblType.setBounds(85, 75, 255, 30);
         lblType.setBorder(null);
-        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblType.setForeground(new Color(24, 24, 24)); 
 	lblType.setOpaque(false);
         
         lblDescription.setBounds(175, 125, 165, 30);
         lblDescription.setBorder(null);
-        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblDescription.setForeground(new Color(24, 24, 24)); 
 	lblDescription.setOpaque(false);
         
         lblPrice.setBounds(175, 175, 165, 30);
         lblPrice.setBorder(null);
-        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblPrice.setForeground(new Color(24, 24, 24)); 
 	lblPrice.setOpaque(false);
         
@@ -337,6 +358,7 @@ public class ClientStart extends JFrame implements ActionListener {
     }
     
     public void deleteRooms() {
+        btnReservateList.removeAll(btnReservateList);
         typeList.removeAll(typeList);
         roomList.removeAll(roomList);
         
@@ -375,6 +397,8 @@ public class ClientStart extends JFrame implements ActionListener {
         
         for(int i = 0; i < btnReservateList.size(); i++) {
             if(event.getSource() == btnReservateList.get(i)) {
+                roomSelected = roomList.get(i);
+                typeSelected = typeList.get(i);
                 goToReservation();
             }
         }      

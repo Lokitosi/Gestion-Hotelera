@@ -4,11 +4,11 @@ package Logic.Main;
  * Initialize the window
 */
 
-import GUI.Reservation;
+import GUI.Start;
 
 public class Controller {
     /* Main function */
     public static void main(String[] args) {          
-        Reservation window = new Reservation();
+        Start window = new Start();
     }
 }

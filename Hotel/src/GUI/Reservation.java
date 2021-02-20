@@ -11,10 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Database.CaException;
-import DAO.BillDAO;
-import Logic.Bill;
-
 public class Reservation extends JFrame implements ActionListener {
     /* Graphic variables */
     private JLabel lblBackground;
@@ -35,28 +31,21 @@ public class Reservation extends JFrame implements ActionListener {
     /* Logic variables */
     private Profile window2;
     
-    private BillDAO billDAO;
-    private Bill bill;
-    
     private String discountText;
     
     /* Constructor */
     public Reservation() {
-        billDAO = new BillDAO();
-        bill = new Bill();
-        
-        //discountText = Short.toString(Start.hotel.getT_descuento()); 
-        discountText = "20";
+        discountText = Short.toString(Start.hotel.getT_descuento()); 
                 
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
         // Create components
         lblBackground = new JLabel();
         lblRoomImage = new JLabel();
-        lblNumber = new JLabel("", SwingConstants.CENTER);
-        lblType = new JLabel("", SwingConstants.CENTER);
-        lblDescription = new JLabel("", SwingConstants.CENTER);
-        lblPrice = new JLabel("", SwingConstants.CENTER);
+        lblNumber = new JLabel(ClientStart.roomSelected.getK_numero(), SwingConstants.CENTER);
+        lblType = new JLabel(ClientStart.typeConversion, SwingConstants.CENTER);
+        lblDescription = new JLabel(ClientStart.typeSelected.getN_descripcion(), SwingConstants.CENTER);
+        lblPrice = new JLabel("$" + ClientStart.typeSelected.getV_precio(), SwingConstants.CENTER);
         lblDiscount = new JLabel(discountText + "%", SwingConstants.CENTER);
         
         txtDate = new JTextField();
@@ -81,25 +70,25 @@ public class Reservation extends JFrame implements ActionListener {
         
         lblNumber.setBounds(210, 429, 150, 30);
         lblNumber.setBorder(null); 
-        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblNumber.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblNumber.setForeground(new Color(24, 24, 24)); 
 	lblNumber.setOpaque(false);
         
         lblType.setBounds(105, 479, 255, 30);
         lblType.setBorder(null);
-        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblType.setForeground(new Color(24, 24, 24)); 
 	lblType.setOpaque(false);
         
         lblDescription.setBounds(195, 529, 165, 30);
         lblDescription.setBorder(null);
-        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblDescription.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblDescription.setForeground(new Color(24, 24, 24)); 
 	lblDescription.setOpaque(false);
         
         lblPrice.setBounds(195, 579, 165, 30);
         lblPrice.setBorder(null);
-        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+        lblPrice.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 19));
         lblPrice.setForeground(new Color(24, 24, 24)); 
 	lblPrice.setOpaque(false);
         
@@ -168,32 +157,10 @@ public class Reservation extends JFrame implements ActionListener {
         window2 = new Profile();  
     }
     
-    /* Create DAO's */
-    public void createBill() throws CaException {
-        if(Integer.toString(billDAO.getAllBills() + 1).length() == 1) {
-            bill.setK_cuenta("C00" + Integer.toString(billDAO.getAllBills() + 1));
-        } else if(Integer.toString(billDAO.getAllBills() + 1).length() == 2) {
-            bill.setK_cuenta("C0" + Integer.toString(billDAO.getAllBills() + 1));
-        } else if(Integer.toString(billDAO.getAllBills() + 1).length() == 3) {
-            bill.setK_cuenta("C" + Integer.toString(billDAO.getAllBills() + 1));
-        }
-        
-        billDAO.setBill(bill);
-        billDAO.insertBill();
-    }
-    
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnProfile) {
             goToProfile();
-        }
-        
-        if(event.getSource() == btnReservate) {
-            try {
-                createBill();
-            } catch (CaException e) {
-                Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, e);
-            }
         }
     }
 }
