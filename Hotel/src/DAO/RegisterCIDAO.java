@@ -8,6 +8,7 @@ package DAO;
 import java.sql.*;
 
 import Database.*;
+import Logic.Host;
 import Logic.RegisterCI;
 import Logic.Reservation;
 import Logic.Person;
@@ -15,13 +16,13 @@ import Logic.Person;
 public class RegisterCIDAO {
     private RegisterCI registerci;
     private Reservation reservation;
-    private Person person;
+    private Host host;
     
     /*Constructor*/
     public RegisterCIDAO() {
         registerci = new RegisterCI();
-        person = new Person();
         reservation = new Reservation();   
+        host = new Host();
     }
     
     /* Setters */
@@ -29,8 +30,8 @@ public class RegisterCIDAO {
         this.registerci = registerci;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setHost(Host host) {
+        this.host = host;
     }
 
     public void setReservation(Reservation reservation) {
@@ -44,11 +45,13 @@ public class RegisterCIDAO {
 
     public Reservation getReservation() {
         return reservation;
-    }
+    }    
 
-    public Person getPerson() {
-        return person;
+    public Host getHost() {
+        return host;
     }
+    
+    
     
     public void getRegisterCIByID () throws CaException {
         try{
@@ -64,8 +67,8 @@ public class RegisterCIDAO {
             while (res.next()){
                 registerci.setK_registro(res.getString(1));
                 reservation.setK_codigo(res.getString(2)); 
-                person.setK_numeroid(res.getInt(3));
-                person.setK_tipo(res.getString(4)); 
+                host.setK_numeroid(res.getInt(3));
+                host.setK_tipo(res.getString(4)); 
                 registerci.setF_inicio(res.getString(5));
                 registerci.setF_salida(res.getString(6));
             }
@@ -86,8 +89,8 @@ public class RegisterCIDAO {
 
             pState.setString(1, registerci.getK_registro());
             pState.setString(2, reservation.getK_codigo());
-            pState.setLong(3, person.getK_numeroid());
-            pState.setString(4, person.getK_tipo());
+            pState.setLong(3, host.getK_numeroid());
+            pState.setString(4, host.getK_tipo());
             pState.setString(6, registerci.getF_inicio());
             pState.setString(7, registerci.getF_salida());
 
@@ -110,8 +113,8 @@ public class RegisterCIDAO {
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
             pState.setString(1, reservation.getK_codigo());
-            pState.setLong(2, person.getK_numeroid());
-            pState.setString(3, person.getK_tipo());
+            pState.setLong(2, host.getK_numeroid());
+            pState.setString(3, host.getK_tipo());
             pState.setString(4, registerci.getF_inicio());
             pState.setString(5, registerci.getF_salida());
             pState.setString(6, registerci.getK_registro());

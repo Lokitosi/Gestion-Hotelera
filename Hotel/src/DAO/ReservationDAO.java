@@ -3,43 +3,79 @@ package DAO;
 import java.sql.*;
 
 import Database.*;
+import Logic.Bill;
+import Logic.Hotel;
+import Logic.Person;
 import Logic.Reservation;
 
 public class ReservationDAO {
     private Reservation reservation;
+    private Person person;
+    private Hotel hotel;
+    private Bill bill;
+    
     
     /* Constructor */
     public ReservationDAO() {
         reservation = new Reservation();
+        person = new Person();
     }
     
     /* Setters */
     public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
     
     /* Getters */
     public Reservation getReservation() {
         return reservation;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
     
-    public void getReservationByID() throws CaException { 
+    public void getReservationByID( String K_codigo) throws CaException { 
         try{
-            String strSQL = "SELECT k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas FROM reserva WHERE k_numero = ?";
+            String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas FROM reserva WHERE k_codigo = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, reservation.getK_codigo());
+            pState.setString(1, K_codigo);
             
             ResultSet res = pState.executeQuery();
         
             while (res.next()){
                 reservation.setK_codigo(res.getString(1));
-                reservation.setF_inicio(res.getString(2));
-                reservation.setQ_duracion(res.getShort(3));
-                reservation.setI_estado(res.getString(4));
-                reservation.setQ_cantPersonas(res.getShort(5)); 
+                hotel.setK_idHotel(res.getString(2));
+                person.setK_numeroid(res.getInt(3));
+                person.setK_tipo(res.getString(4));
+                bill.setK_cuenta(res.getString(5));
+                reservation.setF_inicio(res.getString(6));
+                reservation.setQ_duracion(res.getShort(7));
+                reservation.setI_estado(res.getString(8));
+                reservation.setQ_cantPersonas(res.getShort(9)); 
             }
         } catch(SQLException e) {
             throw new CaException("ReservationDAO", "No pudo recuperar la reservación " + e.getMessage());
@@ -47,6 +83,28 @@ public class ReservationDAO {
             ServiceLocator.getInstance().releaseConnection();
         }
     }
+    
+    public void getCodeReservation (String k_numeroid) throws CaException{
+        try {
+            String strSQL  = "SELECT k_codigo FROM reserva WHERE k_numeroid = ?";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL);
+            
+            pState.setString(1, k_numeroid);
+            
+            ResultSet res = pState.executeQuery();
+            
+            while (res.next()){
+                reservation.setK_codigo(res.getString(1));
+            }
+        } catch(SQLException e) {
+            throw new CaException("ReservationDAO", "No pudo recuperar el codigo de reserva " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
+            
+    }    
     
     /* CRUD */
     public void insertReservation() throws CaException {

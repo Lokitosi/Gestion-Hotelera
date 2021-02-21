@@ -43,7 +43,6 @@ public class CheckIn extends JFrame implements ActionListener {
     private JTextField txtDate; 
     private JTextField txtReserverDocument; 
     private JTextField txtDays; 
-    private JTextField txtReservationCode;
     
     private JButton btnCheckIn;
     private JButton btnGoToBack;
@@ -79,7 +78,6 @@ public class CheckIn extends JFrame implements ActionListener {
     private String dateText;
     private long reserverDocumentText;
     private long daysText;
-    private String reservationCodeText;
     
     private boolean makeCheckIn;
     private boolean canPass;
@@ -318,7 +316,6 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDate.setText("");
         txtReserverDocument.setText("");
         txtDays.setText("");
-        txtReservationCode.setText(""); //
     }
     
     /* Verify text fields in the Backward */
@@ -333,9 +330,12 @@ public class CheckIn extends JFrame implements ActionListener {
     
     /* Verify text fields in the Forward */
     public void verifyReservation(){
-        if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals("")) && (!txtDays.getText().equals(""))){
-            if ((!txtReservationCode.getText().equals("")) || (!txtReserverDocument.getText().equals(""))){
-                makeCheckIn = true;
+        if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
+            && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals(""))){
+            try {
+                checkAssociaton();
+            } catch (CaException e) {
+                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
             makeCheckIn = false;
@@ -387,7 +387,6 @@ public class CheckIn extends JFrame implements ActionListener {
         dateText = txtDate.getText();
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         daysText = Long.parseLong(txtDays.getText());
-        //reservationCodeText = Long.parseLong(txtReservationCode.getText());
         //bornDateText = txtBornDate.getText();
         
         //host.setF_nacimiento(bornDateText);
@@ -401,17 +400,31 @@ public class CheckIn extends JFrame implements ActionListener {
         //reservationDAO.setPerson(reserver);
         reservationDAO.setReservation(reservation);
         
-        //reservation.setK_codigo(reservationCodeText);
-        
         registerci.setF_inicio(dateText);
         registerci.setF_salida(calculeDate(dateText, daysText));
         
-        registerCIDAO.setPerson(person);
+        registerCIDAO.setHost(host);
         registerCIDAO.setReservation(reservation);
         registerCIDAO.setRegisterCI(registerci);
         registerCIDAO.insertRegisterCI();
         
 }
+    
+    /* Found reserve*/
+    public void checkAssociaton() throws CaException{
+        reservationDAO = new ReservationDAO();
+        
+        reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
+        
+        reservationDAO.getCodeReservation(txtReserverDocument.getText());
+        
+        if(reservationDAO.getReservation().getK_codigo() != ""){
+            reservation = reservationDAO.getReservation();
+            makeCheckIn = true;
+        } else {
+            System.out.println("No esta asociado a la reserva");
+        }
+    }
     
     /* Give date from his out */
     public String calculeDate (String date, long days){
@@ -420,6 +433,7 @@ public class CheckIn extends JFrame implements ActionListener {
         dateArray = date.toCharArray();
         String dayString, monthString, yearString;
         
+        //01/02/2020
         int day, month, year;
         int d=0, m=0, y=0;
         
@@ -470,8 +484,7 @@ public class CheckIn extends JFrame implements ActionListener {
         
         if(event.getSource() == btnGoToBack && pnlScreen1.isEnabled()== true) {
             clear();
-            goToStart();
-            
+            goToStart();    
         } 
         
         if(event.getSource() == btnGoToBack && pnlScreen2.isEnabled() == true) {
