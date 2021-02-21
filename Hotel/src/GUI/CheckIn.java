@@ -345,8 +345,8 @@ public class CheckIn extends JFrame implements ActionListener {
         if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
             && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals("")) 
             && (!txtBornDate.getText().equals(""))){
+            
             try {
-                
                 checkAssociaton();
             } catch (CaException e) {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
