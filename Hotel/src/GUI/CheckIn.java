@@ -140,7 +140,7 @@ public class CheckIn extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Check In/Background 1.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        lblReservationCode.setBounds(250, 432, 322, 35);
+        lblReservationCode.setBounds(845, 432, 322, 35);
         lblReservationCode.setBorder(null);
         lblReservationCode.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         lblReservationCode.setForeground(new Color(24, 24, 24));
@@ -199,11 +199,11 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDirection.setForeground(new Color(24, 24, 24)); 
 	txtDirection.setOpaque(false);
         
-        //txtBornDate.setBounds(250, 195, 322, 35);
-        //txtBornDate.setBorder(null);
-        //txtBornDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        //txtBornDate.setForeground(new Color(24, 24, 24));
-        //txtBornDate.setOpaque(false);
+        txtBornDate.setBounds(250, 432, 322, 35);
+        txtBornDate.setBorder(null);
+        txtBornDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        txtBornDate.setForeground(new Color(24, 24, 24));
+        txtBornDate.setOpaque(false);
         
         txtDate.setBounds(845, 195, 322, 35);
         txtDate.setBorder(null);
@@ -274,7 +274,7 @@ public class CheckIn extends JFrame implements ActionListener {
         
         pnlScreen2.add(btnCheckIn);
         pnlScreen2.add(txtDirection);
-        //pnlScreen2.add(txtBornDate);
+        pnlScreen2.add(txtBornDate);
         pnlScreen2.add(txtDate);
         pnlScreen2.add(txtReserverDocument);
         pnlScreen2.add(txtDays);
@@ -324,7 +324,7 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDocument.setText("");
         txtDocumentType.setText("");
         txtDirection.setText("");
-        //txtBornDate.setText("");
+        txtBornDate.setText("");
         txtDate.setText("");
         txtReserverDocument.setText("");
         txtDays.setText("");
@@ -342,10 +342,11 @@ public class CheckIn extends JFrame implements ActionListener {
     
     /* Verify text fields in the Forward */
     public void verifyReservation(){    
-        //&& (!txtBornDate.getText().equals(""))
         if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
-            && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals(""))){
+            && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals("")) 
+            && (!txtBornDate.getText().equals(""))){
             try {
+                
                 checkAssociaton();
             } catch (CaException e) {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
@@ -400,9 +401,9 @@ public class CheckIn extends JFrame implements ActionListener {
         dateText = txtDate.getText();
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         daysText = Long.parseLong(txtDays.getText());
-        //bornDateText = txtBornDate.getText();
+        bornDateText = txtBornDate.getText();
         
-        //host.setF_nacimiento(bornDateText);
+        host.setF_nacimiento(bornDateText);
         host.setN_direccion(directionText);
         
         hostDAO.setHost(host);
@@ -498,7 +499,6 @@ public class CheckIn extends JFrame implements ActionListener {
         return dateOutString;
     }
     
-  
     /* Button actions */
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == btnGoForward) {
