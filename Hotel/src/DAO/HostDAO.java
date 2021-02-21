@@ -56,7 +56,7 @@ public class HostDAO {
     /* CRUD */
     public void insertHost() throws CaException {
         try {
-            String strSQL = "INSERT INTO huesped (k_numeroid, k_tipo,f_nacimiento, n_direccion) values (?,?,?,?)";
+            String strSQL = "INSERT INTO huesped (k_numeroid, k_tipo, f_nacimiento, n_direccion) values (?,?,TO_DATE(?,'DD/MM/YYYY'),?)";
 
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);

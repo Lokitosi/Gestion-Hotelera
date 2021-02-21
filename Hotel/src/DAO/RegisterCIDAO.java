@@ -102,7 +102,8 @@ public class RegisterCIDAO {
     /* CRUD */
     public void insertRegisterCI() throws CaException { 
         try {
-            String strSQL = "INSERT INTO registroci (k_registro, k_codigo, k_numeroid,k_tipo, f_inicio, f_salida) values(?,?,?,?,?,?)";
+            String strSQL = "INSERT INTO registroci (k_registro, k_codigo, k_numeroid, k_tipo, f_inicio, f_salida)"
+                + "values(?,?,?,?,TO_DATE(?,'DD/MM/YYYY'),TO_DATE(?,'DD/MM/YYYY'))";
 
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
