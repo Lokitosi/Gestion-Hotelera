@@ -104,6 +104,15 @@ public class LogIn extends JFrame implements ActionListener {
         
         this.setVisible(true);
     }
+    /*get set*/
+
+    public static Person getPerson() {
+        return person;
+    }
+
+    public static void setPerson(Person person) {
+        LogIn.person = person;
+    }
     
     /* Change windows */
     public void goToStart() {

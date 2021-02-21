@@ -240,6 +240,8 @@ public class Register extends JFrame implements ActionListener {
                 try {
                     register();
                     clear();
+                    JOptionPane.showMessageDialog(null, "El usuario se ha registrado con exito");
+                    goToStart();
                 } catch (CaException e) {
                     Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, e);
                 } 
