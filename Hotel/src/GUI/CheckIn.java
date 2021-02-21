@@ -379,7 +379,7 @@ public class CheckIn extends JFrame implements ActionListener {
         host.setK_numeroid(documentText);
         host.setK_tipo(documentTypeText);
         
-        hostDAO.setHost(host);
+        //hostDAO.setHost(host);
         //hostDAO.insertHost();
         
         phone.setK_telefono(phone1Text);
@@ -411,7 +411,7 @@ public class CheckIn extends JFrame implements ActionListener {
         
         reserver.setK_numeroid(reserverDocumentText);
         
-        //reservationDAO.setPerson(reserver);
+        reservationDAO.setPerson(reserver);
         reservationDAO.setReservation(reservation);
         
         switch (Integer.toString(registerCIDAO.getAllRegisters()+ 1).length()) {
@@ -504,7 +504,7 @@ public class CheckIn extends JFrame implements ActionListener {
         if(event.getSource() == btnGoForward) {
             verifyInformation();
             
-           if (canPass = true){       
+           if (canPass == true){       
                 goForward();      
             }
         }
@@ -521,16 +521,18 @@ public class CheckIn extends JFrame implements ActionListener {
         if(event.getSource() == btnCheckIn) {
             verifyReservation();
             
-            if (makeCheckIn = true){
+            if (makeCheckIn == true){
                 try {
                     checkInFirstPart();
                     checkInLastPart();
                     clear();
+                    JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
                     goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
                 }
             } else {
+                JOptionPane.showMessageDialog(null," No se ha encontrado la reserva");
                 System.out.println("Campos vacios");
             }
         }
