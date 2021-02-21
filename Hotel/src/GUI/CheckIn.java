@@ -39,7 +39,8 @@ public class CheckIn extends JFrame implements ActionListener {
     private JTextField txtPhone2;
     private JTextField txtDocument;
     private JTextField txtDocumentType; 
-    private JTextField txtDirection; 
+    private JTextField txtDirection;
+    private JTextField txtBornDate;
     private JTextField txtDate; 
     private JTextField txtReserverDocument; 
     private JTextField txtDays; 
@@ -59,6 +60,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private ReservationDAO reservationDAO;
     private RegisterCIDAO registerCIDAO;
     private HostDAO hostDAO;
+    
     private Person person;
     private Person reserver;
     private Phone phone;
@@ -75,6 +77,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private long documentText;
     private String documentTypeText;
     private String directionText;
+    private String bornDateText;
     private String dateText;
     private long reserverDocumentText;
     private long daysText;
@@ -115,6 +118,7 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDocument = new JTextField();
         txtDocumentType = new JTextField();
         txtDirection = new JTextField();
+        txtBornDate = new JTextField();
         txtDate = new JTextField();
         txtReserverDocument = new JTextField();
         txtDays = new JTextField();
@@ -195,6 +199,12 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDirection.setForeground(new Color(24, 24, 24)); 
 	txtDirection.setOpaque(false);
         
+        //txtBornDate.setBounds(250, 195, 322, 35);
+        //txtBornDate.setBorder(null);
+        //txtBornDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        //txtBornDate.setForeground(new Color(24, 24, 24));
+        //txtBornDate.setOpaque(false);
+        
         txtDate.setBounds(845, 195, 322, 35);
         txtDate.setBorder(null);
         txtDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
@@ -264,6 +274,7 @@ public class CheckIn extends JFrame implements ActionListener {
         
         pnlScreen2.add(btnCheckIn);
         pnlScreen2.add(txtDirection);
+        //pnlScreen2.add(txtBornDate);
         pnlScreen2.add(txtDate);
         pnlScreen2.add(txtReserverDocument);
         pnlScreen2.add(txtDays);
@@ -313,6 +324,7 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDocument.setText("");
         txtDocumentType.setText("");
         txtDirection.setText("");
+        //txtBornDate.setText("");
         txtDate.setText("");
         txtReserverDocument.setText("");
         txtDays.setText("");
@@ -330,6 +342,8 @@ public class CheckIn extends JFrame implements ActionListener {
     
     /* Verify text fields in the Forward */
     public void verifyReservation(){
+        
+        //&& (!txtBornDate.getText().equals(""))
         if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
             && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals(""))){
             try {
@@ -453,18 +467,19 @@ public class CheckIn extends JFrame implements ActionListener {
                 y++;
             }
         }
-        
+        //Se coonvierten las cadenas de caracteres en String
         dayString = String.valueOf(dayChar);
         monthString = String.valueOf(monthChar);
         yearString = String.valueOf(yearChar);
-        
+        //Convertimos dichas String en Enteros para operar
         day = Integer.valueOf(dayString);
         month = Integer.valueOf(monthString);
         year = Integer.valueOf(yearString);
-        
+        //LocalDate, se encarga de representar la fecha actua
         LocalDate dateIn = LocalDate.of(year,month,day);
+        //Calcula la fecha siguiente
         LocalDate dateOut = dateIn.plus(4,ChronoUnit.DAYS);
-        
+        //Aplicamos un formato y luego convertimos a string para poder retornar 
         DateTimeFormatter formatDateSQL = DateTimeFormatter.ofPattern("dd'/'MM'/'yyyy");
         String dateOutString = dateOut.format(formatDateSQL);
         
@@ -499,6 +514,7 @@ public class CheckIn extends JFrame implements ActionListener {
                     checkInFirstPart();
                     checkInLastPart();
                     clear();
+                    goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
                 }
