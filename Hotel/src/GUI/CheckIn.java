@@ -83,7 +83,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private long daysText;
     
     private boolean makeCheckIn;
-    private boolean canPass;
+    private boolean canPass; 
     
     
     /* Constructor */
@@ -224,13 +224,11 @@ public class CheckIn extends JFrame implements ActionListener {
 	txtDays.setOpaque(false);
         
         btnCheckIn.setIcon(new ImageIcon(("./Images/Check In/Btn Check In.png"))); 
-        btnCheckIn.setBounds(956, 545, 220, 80);
+        btnCheckIn.setBounds(957, 545, 220, 80);
         btnCheckIn.setContentAreaFilled(false);
         btnCheckIn.setBorderPainted(false);
         btnCheckIn.setOpaque(false); 
         btnCheckIn.setFocusable(false);
-        btnCheckIn.setVisible(false);
-        btnCheckIn.setEnabled(false); 
         btnCheckIn.addActionListener(this);
         
         btnGoToBack.setIcon(new ImageIcon(("./Images/Check In/Btn Go To Back.png"))); 
@@ -241,8 +239,8 @@ public class CheckIn extends JFrame implements ActionListener {
         btnGoToBack.setFocusable(false);
         btnGoToBack.addActionListener(this);
         
-        btnGoForward.setIcon(new ImageIcon(("./Images/Check In/Btn Check In.png"))); 
-        btnGoForward.setBounds(956, 545, 220, 80);
+        btnGoForward.setIcon(new ImageIcon(("./Images/Check In/Btn Go Forward.png"))); 
+        btnGoForward.setBounds(970, 545, 220, 80);
         btnGoForward.setContentAreaFilled(false);
         btnGoForward.setBorderPainted(false);
         btnGoForward.setOpaque(false); 
@@ -303,6 +301,7 @@ public class CheckIn extends JFrame implements ActionListener {
         pnlScreen1.setEnabled(false);
         pnlScreen2.setVisible(true);
         pnlScreen2.setEnabled(true);
+        btnCheckIn.addActionListener(this);
     }
     
     public void goBackward() {
@@ -504,7 +503,7 @@ public class CheckIn extends JFrame implements ActionListener {
         if(event.getSource() == btnGoForward) {
             verifyInformation();
             
-           if (canPass = true){       
+           if (canPass == true){       
                 goForward();      
             }
         }
@@ -519,19 +518,25 @@ public class CheckIn extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnCheckIn) {
-            verifyReservation();
-            
-            if (makeCheckIn = true){
-                try {
-                    checkInFirstPart();
-                    checkInLastPart();
-                    clear();
-                    goBackward();
-                } catch (CaException e ) {
-                    Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
+            if(event.getSource() == btnCheckIn) {
+                System.out.println("xdxd");
+                verifyReservation();
+                System.out.println("ksjd");
+
+                if (makeCheckIn == true){
+                    try {
+                        checkInFirstPart();
+                        checkInLastPart();
+                        clear();
+                        JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
+                        goBackward();
+                    } catch (CaException e ) {
+                        Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null," No se ha encontrado la reserva");
+                    System.out.println("Campos vacios");
                 }
-            } else {
-                System.out.println("Campos vacios");
             }
         }
     }
