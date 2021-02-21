@@ -4,6 +4,12 @@ package GUI;
  * 8th window
 */
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter; 
@@ -19,12 +25,6 @@ import Logic.Person;
 import Logic.Phone;
 import Logic.Reservation;
 import Logic.RegisterCI;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CheckIn extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -341,8 +341,7 @@ public class CheckIn extends JFrame implements ActionListener {
     }
     
     /* Verify text fields in the Forward */
-    public void verifyReservation(){
-        
+    public void verifyReservation(){    
         //&& (!txtBornDate.getText().equals(""))
         if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
             && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals(""))){
@@ -414,15 +413,28 @@ public class CheckIn extends JFrame implements ActionListener {
         //reservationDAO.setPerson(reserver);
         reservationDAO.setReservation(reservation);
         
+        switch (Integer.toString(registerCIDAO.getAllRegisters()+ 1).length()) {
+            case 1:
+                registerci.setK_registro("RC00" + Integer.toString(registerCIDAO.getAllRegisters() + 1));
+                break;
+            case 2:
+                registerci.setK_registro("RC0" + Integer.toString(registerCIDAO.getAllRegisters() + 1));
+                break;
+            case 3:
+                registerci.setK_registro("RC" + Integer.toString(registerCIDAO.getAllRegisters() + 1));
+                break;
+            default:
+                break;
+        }
+        
         registerci.setF_inicio(dateText);
         registerci.setF_salida(calculeDate(dateText, daysText));
         
         registerCIDAO.setHost(host);
         registerCIDAO.setReservation(reservation);
         registerCIDAO.setRegisterCI(registerci);
-        registerCIDAO.insertRegisterCI();
-        
-}
+        registerCIDAO.insertRegisterCI();    
+    }
     
     /* Found reserve*/
     public void checkAssociaton() throws CaException{

@@ -55,9 +55,33 @@ public class ReservationDAO {
         return bill;
     }
     
+    public int getAllReservations() throws CaException {
+        int registers = 0;
+        
+        try{
+            String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas FROM reserva";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL); 
+            
+            ResultSet res = pState.executeQuery();
+        
+            while (res.next()){
+                registers +=1;
+            }
+        } catch(SQLException e) {
+            throw new CaException("ReservationDAO", "No pudo recuperar las reservaciones " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
+        
+        return registers;
+    }
+    
     public void getReservationByID( String K_codigo) throws CaException { 
         try{
-            String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas FROM reserva WHERE k_codigo = ?";
+            String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas "
+                    + "FROM reserva WHERE k_codigo = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);

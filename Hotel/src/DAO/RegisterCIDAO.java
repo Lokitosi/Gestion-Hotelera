@@ -11,7 +11,6 @@ import Database.*;
 import Logic.Host;
 import Logic.RegisterCI;
 import Logic.Reservation;
-import Logic.Person;
 
 public class RegisterCIDAO {
     private RegisterCI registerci;
@@ -51,8 +50,29 @@ public class RegisterCIDAO {
         return host;
     }
     
-    
-    
+    public int getAllRegisters() throws CaException {
+        int registers = 0;
+        
+        try{
+            String strSQL = "SELECT k_registro, k_codigo, k_numeroid, k_tipo, f_inicio, f_salida FROM registroci";
+            
+            Connection connection = ServiceLocator.getInstance().takeConnection();
+            PreparedStatement pState = connection.prepareStatement(strSQL); 
+            
+            ResultSet res = pState.executeQuery();
+        
+            while (res.next()){
+                registers +=1;
+            }
+        } catch(SQLException e) {
+            throw new CaException("RegisterCIDAO", "No pudo recuperar los registros check in " + e.getMessage());
+        } finally {
+            ServiceLocator.getInstance().releaseConnection();
+        }
+        
+        return registers;
+    }
+
     public void getRegisterCIByID () throws CaException {
         try{
             String strSQL = "SELECT k_registro, k_codigo, k_numeroid, k_tipo, f_inicio, f_salida FROM registroci WHERE k_registro = ?";
