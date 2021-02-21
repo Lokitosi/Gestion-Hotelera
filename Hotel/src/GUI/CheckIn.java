@@ -229,8 +229,6 @@ public class CheckIn extends JFrame implements ActionListener {
         btnCheckIn.setBorderPainted(false);
         btnCheckIn.setOpaque(false); 
         btnCheckIn.setFocusable(false);
-        btnCheckIn.setVisible(false);
-        btnCheckIn.setEnabled(false); 
         btnCheckIn.addActionListener(this);
         
         btnGoToBack.setIcon(new ImageIcon(("./Images/Check In/Btn Go To Back.png"))); 
@@ -448,6 +446,7 @@ public class CheckIn extends JFrame implements ActionListener {
         if(reservationDAO.getReservation().getK_codigo() != ""){
             reservation = reservationDAO.getReservation();
             makeCheckIn = true;
+            System.out.println("safe");
         } else {
             System.out.println("No esta asociado a la reserva");
         }
@@ -519,7 +518,9 @@ public class CheckIn extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnCheckIn) {
+            System.out.println("xdxd");
             verifyReservation();
+            System.out.println("ksjd");
             
             if (makeCheckIn == true){
                 try {
