@@ -33,6 +33,7 @@ public class Reservation extends JFrame implements ActionListener {
     
     /* Logic variables */
     private Profile window2;
+    private ClientStart window3;
     private ReservationDAO reserveDAO;
     private Logic.Reservation reservation;
     private String start_date;
@@ -167,6 +168,17 @@ public class Reservation extends JFrame implements ActionListener {
         window2 = new Profile();  
     }
     
+    public void goToClientStart() {
+        this.dispose();
+        window3 = new ClientStart(); 
+    }
+    
+    public void clear() {
+        txtDate.setText("");
+        txtDays.setText("");
+        txtGuests.setText("");
+    }
+    
     /*Make reservation*/
     public void reserve() throws CaException{
         //k_codigo = "a";//hacerlo autoincremental
@@ -212,7 +224,9 @@ public class Reservation extends JFrame implements ActionListener {
         if(event.getSource() == btnReservate){
             try {
                 reserve();
-                System.out.println("se realizo la reserva");
+                JOptionPane.showMessageDialog(null, "Se realizo una reserva");
+                clear();
+                goToClientStart();
             } catch (CaException ex) {
                 Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
             }

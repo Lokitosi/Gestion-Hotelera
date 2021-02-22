@@ -112,14 +112,14 @@ public class ReservationDAO {
     }
     
     /*obtener codigo reserva*/
-    public void getCodeReservation (String k_numeroid) throws CaException{
+    public void getCodeReservation (long k_numeroid) throws CaException{
         try {
             String strSQL  = "SELECT k_codigo FROM reserva WHERE k_numeroid = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, k_numeroid);
+            pState.setLong(1, k_numeroid);
             
             ResultSet res = pState.executeQuery();
             

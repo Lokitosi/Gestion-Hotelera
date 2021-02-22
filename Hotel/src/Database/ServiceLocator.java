@@ -17,7 +17,7 @@ public class ServiceLocator {
         try {
             String url = "jdbc:postgresql://localhost:5432/Hotel";
             String usuario = "postgres";
-            String password = "password";
+            String password = "juliono1999";
             Class.forName("org.postgresql.Driver").newInstance();
             connection = DriverManager.getConnection(url, usuario, password);
             connection.setAutoCommit(false);

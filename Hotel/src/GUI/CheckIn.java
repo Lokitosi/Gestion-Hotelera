@@ -441,12 +441,13 @@ public class CheckIn extends JFrame implements ActionListener {
         
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         
-        reservationDAO.getCodeReservation(txtReserverDocument.getText());
+        reservationDAO.getCodeReservation(reserverDocumentText);
+        System.out.println(txtReserverDocument.getText());
         
+        //No esta entrando en este if 
         if(reservationDAO.getReservation().getK_codigo() != ""){
             reservation = reservationDAO.getReservation();
             makeCheckIn = true;
-            System.out.println("safe");
         } else {
             System.out.println("No esta asociado a la reserva");
         }
@@ -518,16 +519,14 @@ public class CheckIn extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnCheckIn) {
-            System.out.println("xdxd");
             verifyReservation();
-            System.out.println("ksjd");
             
             if (makeCheckIn == true){
                 try {
                     checkInFirstPart();
                     checkInLastPart();
-                    clear();
                     JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
+                    clear();
                     goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
