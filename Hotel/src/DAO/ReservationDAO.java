@@ -3,10 +3,12 @@ package DAO;
 import java.sql.*;
 
 import Database.*;
+import GUI.LogIn;
 import Logic.Bill;
 import Logic.Hotel;
 import Logic.Person;
 import Logic.Reservation;
+import java.sql.Date;
 
 public class ReservationDAO {
     private Reservation reservation;
@@ -55,6 +57,7 @@ public class ReservationDAO {
         return bill;
     }
     
+    /*Obtener todas las reservas */
     public int getAllReservations() throws CaException {
         int registers = 0;
         
@@ -77,7 +80,7 @@ public class ReservationDAO {
         
         return registers;
     }
-    
+    /*Obtener reserva por id*/
     public void getReservationByID( String K_codigo) throws CaException { 
         try{
             String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas "
@@ -108,6 +111,7 @@ public class ReservationDAO {
         }
     }
     
+    /*obtener codigo reserva*/
     public void getCodeReservation (String k_numeroid) throws CaException{
         try {
             String strSQL  = "SELECT k_codigo FROM reserva WHERE k_numeroid = ?";
@@ -133,21 +137,25 @@ public class ReservationDAO {
     /* CRUD */
     public void insertReservation() throws CaException {
         try {
-            String strSQL = "INSERT INTO reserva (k_codigo, f_inicio, q_duracion, i_estado, q_cantPersonas) values(?,?,?,?,?)";
-
+            String strSQL = "INSERT INTO reserva (k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantPersonas)"
+                    + " values(?,?,?,?,?,TO_DATE(?,'DD/MM/YYYY'),?,?,?)";
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
 
             pState.setString(1, reservation.getK_codigo());
-            pState.setString(2, reservation.getF_inicio());
-            pState.setShort(3, reservation.getQ_duracion());
-            pState.setString(4, reservation.getI_estado());
-            pState.setShort(5, reservation.getQ_cantPersonas());
+            pState.setString(2, hotel.getK_idHotel());
+            pState.setLong(3, person.getK_numeroid());
+            pState.setString(4, person.getK_tipo());
+            pState.setString(5, null);        
+            pState.setString(6, reservation.getF_inicio());
+            pState.setShort(7, reservation.getQ_duracion());
+            pState.setString(8, reservation.getI_estado());
+            pState.setShort(9, reservation.getQ_cantPersonas());
 
             pState.executeUpdate();
             pState.close();
-            
             ServiceLocator.getInstance().commit();
+            
         } catch (SQLException e) {
             throw new CaException("ReservationDAO", "No pudo insertar la reservación " + e.getMessage());
         }  finally {

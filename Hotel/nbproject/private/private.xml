@@ -3,7 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Familia%20Ardila/Documents/Willy%20(NO%20BORRAR)/4to%20Semestre/Fundamentos%20Bases%20De%20Datos/Proyecto%20Final/Implementacion/Gestion-Hotelera/Hotel/src/GUI/CheckIn.java</file>
+=======
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/GUI/Register.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/GUI/CheckIn.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/DAO/HostDAO.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/DAO/ReservationDAO.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/DAO/RegisterCIDAO.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/GUI/LogIn.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/DAO/PersonDAO.java</file>
+            <file>file:/C:/Users/Julian%20Sanchez/Desktop/JulianUD/Fundamentos%20de%20BD/ProyectoFundamentos/Gestion-Hotelera/Hotel/src/DAO/BillDAO.java</file>
+>>>>>>> 792fc5328a2b24bf396103a22bf5e5a0fb70710f
         </group>
     </open-files>
 </project-private>

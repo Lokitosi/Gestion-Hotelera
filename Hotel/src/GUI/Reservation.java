@@ -4,10 +4,13 @@ package GUI;
  * 5th window
 */
 
+import DAO.ReservationDAO;
+import Database.CaException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,11 +33,18 @@ public class Reservation extends JFrame implements ActionListener {
     
     /* Logic variables */
     private Profile window2;
-    
+    private ReservationDAO reserveDAO;
+    private Logic.Reservation reservation;
+    private String start_date;
+    private short days;
+    private short guests;
     private String discountText;
     
     /* Constructor */
     public Reservation() {
+        
+        reserveDAO = new ReservationDAO();
+        reservation = new Logic.Reservation();
         discountText = Short.toString(Start.hotel.getT_descuento()); 
                 
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
@@ -157,10 +167,55 @@ public class Reservation extends JFrame implements ActionListener {
         window2 = new Profile();  
     }
     
+    /*Make reservation*/
+    public void reserve() throws CaException{
+        //k_codigo = "a";//hacerlo autoincremental
+        start_date = txtDate.getText();
+        days = Short.valueOf(txtDays.getText());
+        guests = Short.valueOf(txtGuests.getText());
+        
+        reservation.setF_inicio(start_date);
+        reservation.setQ_duracion(days);
+        reservation.setQ_cantPersonas(guests);
+        reservation.setI_estado("a");
+        
+        
+        switch (Integer.toString(reserveDAO.getAllReservations()+ 1).length()) {
+            case 1:
+                reservation.setK_codigo("R00" + Integer.toString(reserveDAO.getAllReservations() + 1));
+                break;
+            case 2:
+                reservation.setK_codigo("R0" + Integer.toString(reserveDAO.getAllReservations() + 1));
+                break;
+            case 3:
+                reservation.setK_codigo("R" + Integer.toString(reserveDAO.getAllReservations() + 1));
+                break;
+            default:
+                break;
+        }
+        reserveDAO.setReservation(reservation);
+        reserveDAO.setBill(null);
+        reserveDAO.setHotel(Start.hotel);
+        reserveDAO.setPerson(LogIn.person);
+        
+        reserveDAO.insertReservation();
+       
+        
+    }
+    
+    
     /* Button actions */
     public void actionPerformed(ActionEvent event) { 
         if(event.getSource() == btnProfile) {
             goToProfile();
+        }
+        if(event.getSource() == btnReservate){
+            try {
+                reserve();
+                System.out.println("se realizo la reserva");
+            } catch (CaException ex) {
+                Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
