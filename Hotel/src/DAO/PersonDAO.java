@@ -7,10 +7,12 @@ package DAO;
 
 import java.sql.*;
 
+import GUI.Ads;
 import Database.*;
 import Logic.Person;
 
 public class PersonDAO {
+    private Ads adWindow;
     private Person person;
 
     /*Constructor*/

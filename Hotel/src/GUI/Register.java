@@ -34,6 +34,7 @@ public class Register extends JFrame implements ActionListener {
     private JButton btnGoToBack;
     
     /* Logic variables */
+    private Ads adWindow;
     private Start window2;
     
     private PersonDAO personDAO;
@@ -239,14 +240,13 @@ public class Register extends JFrame implements ActionListener {
             if(canRegister == true) {
                 try {
                     register();
+                    adWindow = new Ads("./Images/Register/Ad Successful Register.png");
                     clear();
-                    JOptionPane.showMessageDialog(null, "El usuario se ha registrado con exito");
-                    goToStart();
                 } catch (CaException e) {
-                    Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, e);
+                    adWindow = new Ads("./Images/Register/Ad Existing Register.png");
                 } 
             } else {
-                System.out.println("Campos vacios");
+                adWindow = new Ads("./Images/Register/Ad Empty Field.png");
             }     
         }
         

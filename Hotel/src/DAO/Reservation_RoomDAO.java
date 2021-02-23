@@ -36,7 +36,7 @@ public class Reservation_RoomDAO {
     
     public void getReservation_RoomByID() throws CaException {
         try{
-            String strSQL = "SELECT * WHERE k_numero = ? and k_codigo = ?";
+            String strSQL = "SELECT * FROM reservahabitacion WHERE k_numero = ? and k_codigo = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
@@ -60,7 +60,7 @@ public class Reservation_RoomDAO {
     /* CRUD */
     public void insertReservation_Room() throws CaException {
         try {
-            String strSQL = "INSERT INTO bill_consumption (k_numero, k_codigo) values(?,?)";
+            String strSQL = "INSERT INTO reservahabitacion (k_numero, k_codigo) values(?,?)";
 
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);

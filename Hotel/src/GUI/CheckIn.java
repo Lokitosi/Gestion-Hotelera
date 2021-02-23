@@ -53,6 +53,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private JPanel pnlScreen2;
     
     /* Logic variables */
+    private Ads adWindow;
     private Start window2;
     
     private PersonDAO personDAO;
@@ -141,85 +142,85 @@ public class CheckIn extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Check In/Background 1.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        txtName1.setBounds(250, 195, 322, 35);
+        txtName1.setBounds(253, 195, 320, 35);
         txtName1.setBorder(null);
         txtName1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName1.setForeground(new Color(24, 24, 24)); 
 	txtName1.setOpaque(false);
         
-        txtName2.setBounds(845, 195, 322, 35);
+        txtName2.setBounds(848, 195, 320, 35);
         txtName2.setBorder(null);
         txtName2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName2.setForeground(new Color(24, 24, 24)); 
 	txtName2.setOpaque(false);
         
-        txtSurname1.setBounds(250, 312, 322, 35);
+        txtSurname1.setBounds(253, 312, 320, 35);
         txtSurname1.setBorder(null);
         txtSurname1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtSurname1.setForeground(new Color(24, 24, 24)); 
 	txtSurname1.setOpaque(false);
         
-        txtSurname2.setBounds(845, 312, 322, 35);
+        txtSurname2.setBounds(848, 312, 320, 35);
         txtSurname2.setBorder(null);
         txtSurname2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtSurname2.setForeground(new Color(24, 24, 24)); 
 	txtSurname2.setOpaque(false);
         
-        txtPhone1.setBounds(250, 432, 322, 35);
+        txtPhone1.setBounds(253, 432, 320, 35);
         txtPhone1.setBorder(null);
         txtPhone1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtPhone1.setForeground(new Color(24, 24, 24)); 
 	txtPhone1.setOpaque(false);
         
-        txtPhone2.setBounds(845, 432, 322, 35);
+        txtPhone2.setBounds(848, 432, 320, 35);
         txtPhone2.setBorder(null);
         txtPhone2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtPhone2.setForeground(new Color(24, 24, 24)); 
 	txtPhone2.setOpaque(false);
         
-        txtDocument.setBounds(250, 549, 322, 35);
+        txtDocument.setBounds(253, 549, 320, 35);
         txtDocument.setBorder(null);
         txtDocument.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDocument.setForeground(new Color(24, 24, 24)); 
 	txtDocument.setOpaque(false);
         
-        txtDocumentType.setBounds(708, 551, 85, 35);
+        txtDocumentType.setBounds(711, 551, 83, 35);
         txtDocumentType.setBorder(null);
         txtDocumentType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDocumentType.setForeground(new Color(24, 24, 24)); 
 	txtDocumentType.setOpaque(false);
         
-        txtDirection.setBounds(250, 195, 322, 35);
+        txtDirection.setBounds(253, 195, 320, 35);
         txtDirection.setBorder(null);
         txtDirection.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDirection.setForeground(new Color(24, 24, 24)); 
 	txtDirection.setOpaque(false);
         
-        txtBornDate.setBounds(250, 432, 322, 35);
+        txtBornDate.setBounds(253, 432, 320, 35);
         txtBornDate.setBorder(null);
         txtBornDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtBornDate.setForeground(new Color(24, 24, 24));
         txtBornDate.setOpaque(false);
         
-        txtReservationCode.setBounds(845, 432, 322, 35);
+        txtReservationCode.setBounds(848, 432, 320, 35);
         txtReservationCode.setBorder(null);
         txtReservationCode.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtReservationCode.setForeground(new Color(24, 24, 24));
         txtReservationCode.setOpaque(false);
         
-        txtDate.setBounds(845, 195, 322, 35);
+        txtDate.setBounds(848, 195, 320, 35);
         txtDate.setBorder(null);
         txtDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDate.setForeground(new Color(24, 24, 24)); 
 	txtDate.setOpaque(false);
         
-        txtReserverDocument.setBounds(250, 312, 322, 35);
+        txtReserverDocument.setBounds(253, 312, 320, 35);
         txtReserverDocument.setBorder(null);
         txtReserverDocument.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtReserverDocument.setForeground(new Color(24, 24, 24)); 
 	txtReserverDocument.setOpaque(false);
         
-        txtDays.setBounds(845, 312, 88, 35);
+        txtDays.setBounds(847, 312, 85, 35);
         txtDays.setBorder(null);
         txtDays.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDays.setForeground(new Color(24, 24, 24)); 
@@ -338,6 +339,7 @@ public class CheckIn extends JFrame implements ActionListener {
             canPass = true;
         } else {
             canPass = false;
+            adWindow = new Ads("./Images/Check In/Ad Empty Field.png");
         }
     }
     
@@ -354,6 +356,7 @@ public class CheckIn extends JFrame implements ActionListener {
             }
         } else {
             makeCheckIn = false;
+            adWindow = new Ads("./Images/Check In/Ad Empty Field.png");
         }
     }    
     
@@ -448,8 +451,6 @@ public class CheckIn extends JFrame implements ActionListener {
         if(!reservationDAO.getReservation().getK_codigo().equals("")){
             reservation = reservationDAO.getReservation();
             makeCheckIn = true;
-        } else {
-            System.out.println("No esta asociado a la reserva");
         }
     }
     
@@ -525,15 +526,18 @@ public class CheckIn extends JFrame implements ActionListener {
                 try {
                     checkInFirstPart();
                     checkInLastPart();
-                    JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
+                    adWindow = new Ads("./Images/Check In/Ad Successful Check In.png");
                     clear();
                     goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
+                    adWindow = new Ads("./Images/Check In/Ad Incorrect Date.png");
                 }
             } else {
-                JOptionPane.showMessageDialog(null," No se ha encontrado la reserva");
+                adWindow = new Ads("./Images/Check In/Ad Non Existent Reservation.png");
             }
+            
+            event.setSource(null);
         }
     }
 }

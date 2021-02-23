@@ -4,14 +4,15 @@ package GUI;
  * 5th window
 */
 
-import DAO.ReservationDAO;
-import Database.CaException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import DAO.ReservationDAO;
+import Database.CaException;
 
 public class Reservation extends JFrame implements ActionListener {
     /* Graphic variables */ 
@@ -31,22 +32,27 @@ public class Reservation extends JFrame implements ActionListener {
     private JButton btnReservate;
     
     /* Logic variables */
+    private Ads adWindow;
     private Profile window2;
     private ClientStart window3;
+    
     private ReservationDAO reserveDAO;
     private Logic.Reservation reservation;
+    
     private String start_date;
     private short days;
     private short guests;
     private String discountText;
+    private boolean canReservate;
     
     /* Constructor */
     public Reservation() {
-        
         reserveDAO = new ReservationDAO();
         reservation = new Logic.Reservation();
-        discountText = Short.toString(Start.hotel.getT_descuento()); 
-                
+        
+        discountText = Short.toString(Start.hotel.getT_descuento());         
+        canReservate = false;
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE); 
         
         // Create components
@@ -108,19 +114,19 @@ public class Reservation extends JFrame implements ActionListener {
         lblDiscount.setForeground(new Color(24, 24, 24)); 
 	lblDiscount.setOpaque(false);
         
-        txtDate.setBounds(622, 195, 154, 40);
+        txtDate.setBounds(624, 195, 152, 38);
         txtDate.setBorder(null);
         txtDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDate.setForeground(new Color(24, 24, 24)); 
 	txtDate.setOpaque(false);
         
-        txtDays.setBounds(622, 292, 154, 40);
+        txtDays.setBounds(624, 292, 152, 40);
         txtDays.setBorder(null);
         txtDays.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDays.setForeground(new Color(24, 24, 24)); 
 	txtDays.setOpaque(false);
         
-        txtGuests.setBounds(622, 397, 154, 40);
+        txtGuests.setBounds(624, 397, 152, 40);
         txtGuests.setBorder(null);
         txtGuests.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtGuests.setForeground(new Color(24, 24, 24)); 
@@ -178,6 +184,15 @@ public class Reservation extends JFrame implements ActionListener {
         txtGuests.setText("");
     }
     
+    /* Verify text fields */
+    public void verify() {
+        if((!txtDate.getText().equals("")) && (!txtDays.getText().equals("")) && (!txtGuests.getText().equals(""))) {
+            canReservate = true;
+        } else {
+            canReservate = false;
+        }
+    }
+    
     /*Make reservation*/
     public void reserve() throws CaException{
         //k_codigo = "a";//hacerlo autoincremental
@@ -210,8 +225,6 @@ public class Reservation extends JFrame implements ActionListener {
         reserveDAO.setPerson(LogIn.person);
         
         reserveDAO.insertReservation();
-       
-        
     }
     
     
@@ -220,15 +233,23 @@ public class Reservation extends JFrame implements ActionListener {
         if(event.getSource() == btnProfile) {
             goToProfile();
         }
+        
         if(event.getSource() == btnReservate){
-            try {
-                reserve();
-                JOptionPane.showMessageDialog(null, "Se realizo una reserva");
-                clear();
-                goToClientStart();
-            } catch (CaException ex) {
-                Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            verify();
+            
+            if(canReservate == true) {
+                try {
+                    reserve();
+                    adWindow = new Ads("./Images/Reservation/Ad Successful Reservation.png");
+                    clear();
+                    goToClientStart();
+                } catch (CaException ex) {
+                    Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
+                    adWindow = new Ads("./Images/Reservation/Ad Incorrect Date.png");
+                }
+            } else {
+                adWindow = new Ads("./Images/Reservation/Ad Empty Field.png");
+            } 
         }
     }
 }
