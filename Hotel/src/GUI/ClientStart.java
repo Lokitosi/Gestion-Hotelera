@@ -56,7 +56,7 @@ public class ClientStart extends JFrame implements ActionListener {
     private int roomPanelPos;
     
     /* Constructor */
-    public ClientStart() {
+    public ClientStart() { 
         typeDAO = new TypeDAO();
         roomDAO = new RoomDAO();
         typeList = new ArrayList<>(); 
@@ -246,24 +246,33 @@ public class ClientStart extends JFrame implements ActionListener {
                 
                 roomCant += 1;
             }
+            
         } catch (CaException e) {
             Logger.getLogger(ClientStart.class.getName()).log(Level.SEVERE, null, e);
         }
+            /*System.out.println(roomList.get(1).getK_numero());
+            System.out.println(roomList.get(2).getK_numero());
+            System.out.println(roomList.get(3).getK_numero());*/
         
         pnlAllRooms.setPreferredSize(new Dimension(roomCant * 700, 400));
     }
     
     /* Manage rooms */
     public void addRoomInfo(String roomNumber) throws CaException {
-        typeDAO.getTypeByID(roomTypeText);
-        roomDAO.getRoomByID(roomNumber);
+        TypeDAO typeDAOTemp = new TypeDAO();
+        RoomDAO roomDAOTemp = new RoomDAO();
         
-        RoomType roomType = typeDAO.getType();
-        Room room  = roomDAO.getRoom();
+        typeDAOTemp.getTypeByID(roomTypeText);
+        roomDAOTemp.getRoomByID(roomNumber);
+        
+        RoomType roomType = new RoomType();
+        roomType = typeDAOTemp.getType();
+        Room room = new Room(); 
+        room = roomDAOTemp.getRoom();
         
         typeList.add(roomType);
         roomList.add(room);
-
+        
         createRoom(roomType, room);
     }
     
