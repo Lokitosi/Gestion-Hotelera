@@ -88,49 +88,49 @@ public class Register extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Register/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        txtName1.setBounds(250, 195, 322, 35);
+        txtName1.setBounds(253, 195, 320, 35);
         txtName1.setBorder(null);
         txtName1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName1.setForeground(new Color(24, 24, 24)); 
 	txtName1.setOpaque(false);
         
-        txtName2.setBounds(845, 195, 322, 35);
+        txtName2.setBounds(848, 195, 320, 35);
         txtName2.setBorder(null);
         txtName2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName2.setForeground(new Color(24, 24, 24)); 
 	txtName2.setOpaque(false);
         
-        txtSurname1.setBounds(250, 312, 322, 35);
+        txtSurname1.setBounds(253, 312, 320, 35);
         txtSurname1.setBorder(null);
         txtSurname1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtSurname1.setForeground(new Color(24, 24, 24)); 
 	txtSurname1.setOpaque(false);
         
-        txtSurname2.setBounds(845, 312, 322, 35);
+        txtSurname2.setBounds(848, 312, 320, 35);
         txtSurname2.setBorder(null);
         txtSurname2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtSurname2.setForeground(new Color(24, 24, 24)); 
 	txtSurname2.setOpaque(false);
         
-        txtPhone1.setBounds(250, 432, 322, 35);
+        txtPhone1.setBounds(253, 432, 320, 35);
         txtPhone1.setBorder(null);
         txtPhone1.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtPhone1.setForeground(new Color(24, 24, 24)); 
 	txtPhone1.setOpaque(false);
         
-        txtPhone2.setBounds(845, 432, 322, 35);
+        txtPhone2.setBounds(848, 432, 320, 35);
         txtPhone2.setBorder(null);
         txtPhone2.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtPhone2.setForeground(new Color(24, 24, 24)); 
 	txtPhone2.setOpaque(false);
         
-        txtDocument.setBounds(250, 549, 322, 35);
+        txtDocument.setBounds(253, 549, 320, 35);
         txtDocument.setBorder(null);
         txtDocument.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDocument.setForeground(new Color(24, 24, 24)); 
 	txtDocument.setOpaque(false);
         
-        txtDocumentType.setBounds(708, 551, 85, 35);
+        txtDocumentType.setBounds(711, 551, 83, 35);
         txtDocumentType.setBorder(null);
         txtDocumentType.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDocumentType.setForeground(new Color(24, 24, 24)); 

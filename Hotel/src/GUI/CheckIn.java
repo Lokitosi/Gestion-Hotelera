@@ -29,7 +29,6 @@ import Logic.RegisterCI;
 public class CheckIn extends JFrame implements ActionListener {
     /* Graphic variables */
     private JLabel lblBackground;
-    private JLabel lblReservationCode;
     
     private JTextField txtName1;
     private JTextField txtName2;
@@ -41,6 +40,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private JTextField txtDocumentType; 
     private JTextField txtDirection;
     private JTextField txtBornDate;
+    private JTextField txtReservationCode;
     private JTextField txtDate; 
     private JTextField txtReserverDocument; 
     private JTextField txtDays; 
@@ -78,6 +78,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private String documentTypeText;
     private String directionText;
     private String bornDateText;
+    private String reservationCodeText;
     private String dateText;
     private long reserverDocumentText;
     private long daysText;
@@ -107,7 +108,6 @@ public class CheckIn extends JFrame implements ActionListener {
         
         // Create components
         lblBackground = new JLabel();  
-        lblReservationCode = new JLabel();
         
         txtName1 = new JTextField();
         txtName2 = new JTextField();
@@ -118,6 +118,7 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDocument = new JTextField();
         txtDocumentType = new JTextField();
         txtDirection = new JTextField();
+        txtReservationCode = new JTextField();
         txtBornDate = new JTextField();
         txtDate = new JTextField();
         txtReserverDocument = new JTextField();
@@ -139,11 +140,6 @@ public class CheckIn extends JFrame implements ActionListener {
         
         lblBackground.setIcon(new ImageIcon(("./Images/Check In/Background 1.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
-        
-        lblReservationCode.setBounds(845, 432, 322, 35);
-        lblReservationCode.setBorder(null);
-        lblReservationCode.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        lblReservationCode.setForeground(new Color(24, 24, 24));
         
         txtName1.setBounds(250, 195, 322, 35);
         txtName1.setBorder(null);
@@ -204,6 +200,12 @@ public class CheckIn extends JFrame implements ActionListener {
         txtBornDate.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtBornDate.setForeground(new Color(24, 24, 24));
         txtBornDate.setOpaque(false);
+        
+        txtReservationCode.setBounds(845, 432, 322, 35);
+        txtReservationCode.setBorder(null);
+        txtReservationCode.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        txtReservationCode.setForeground(new Color(24, 24, 24));
+        txtReservationCode.setOpaque(false);
         
         txtDate.setBounds(845, 195, 322, 35);
         txtDate.setBorder(null);
@@ -273,10 +275,10 @@ public class CheckIn extends JFrame implements ActionListener {
         pnlScreen2.add(btnCheckIn);
         pnlScreen2.add(txtDirection);
         pnlScreen2.add(txtBornDate);
+        pnlScreen2.add(txtReservationCode);
         pnlScreen2.add(txtDate);
         pnlScreen2.add(txtReserverDocument);
         pnlScreen2.add(txtDays);
-        pnlScreen2.add(lblReservationCode);
         
         add(btnGoToBack);
         
@@ -378,9 +380,6 @@ public class CheckIn extends JFrame implements ActionListener {
         host.setK_numeroid(documentText);
         host.setK_tipo(documentTypeText);
         
-        //hostDAO.setHost(host);
-        //hostDAO.insertHost();
-        
         phone.setK_telefono(phone1Text);
         phoneDAO.setPerson(person); 
         phoneDAO.setPhone(phone);
@@ -401,6 +400,7 @@ public class CheckIn extends JFrame implements ActionListener {
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         daysText = Long.parseLong(txtDays.getText());
         bornDateText = txtBornDate.getText();
+        reservationCodeText = txtReservationCode.getText();
         
         host.setF_nacimiento(bornDateText);
         host.setN_direccion(directionText);
@@ -409,6 +409,7 @@ public class CheckIn extends JFrame implements ActionListener {
         hostDAO.insertHost();
         
         reserver.setK_numeroid(reserverDocumentText);
+        reservation.setK_codigo(reservationCodeText);
         
         reservationDAO.setPerson(reserver);
         reservationDAO.setReservation(reservation);
@@ -442,9 +443,9 @@ public class CheckIn extends JFrame implements ActionListener {
         
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         
-        reservationDAO.getCodeReservation(txtReserverDocument.getText());
+        reservationDAO.getCodeReservation(reserverDocumentText);
         
-        if(reservationDAO.getReservation().getK_codigo() != ""){
+        if(!reservationDAO.getReservation().getK_codigo().equals("")){
             reservation = reservationDAO.getReservation();
             makeCheckIn = true;
         } else {
@@ -518,42 +519,20 @@ public class CheckIn extends JFrame implements ActionListener {
         }
         
         if(event.getSource() == btnCheckIn) {
-            if(event.getSource() == btnCheckIn) {
-                System.out.println("xdxd");
-                verifyReservation();
-                System.out.println("ksjd");
-
-                if (makeCheckIn == true){
-                    try {
-                        checkInFirstPart();
-                        checkInLastPart();
-                        clear();
-                        JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
-                        goBackward();
-                    } catch (CaException e ) {
-                        Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null," No se ha encontrado la reserva");
-                    System.out.println("Campos vacios");
-                }
-                
             verifyReservation();
             
             if (makeCheckIn == true){
                 try {
                     checkInFirstPart();
                     checkInLastPart();
-                    clear();
                     JOptionPane.showMessageDialog(null,"Se ha realizado el Check In");
+                    clear();
                     goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
                 }
             } else {
                 JOptionPane.showMessageDialog(null," No se ha encontrado la reserva");
-                System.out.println("Campos vacios");
-                }
             }
         }
     }

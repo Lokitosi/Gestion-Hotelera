@@ -112,8 +112,8 @@ public class RegisterCIDAO {
             pState.setString(2, reservation.getK_codigo());
             pState.setLong(3, host.getK_numeroid());
             pState.setString(4, host.getK_tipo());
-            pState.setString(6, registerci.getF_inicio());
-            pState.setString(7, registerci.getF_salida());
+            pState.setString(5, registerci.getF_inicio());
+            pState.setString(6, registerci.getF_salida());
 
             pState.executeUpdate();
             pState.close();
