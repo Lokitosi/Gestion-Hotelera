@@ -81,7 +81,7 @@ public class ReservationDAO {
         return registers;
     }
     /*Obtener reserva por id*/
-    public void getReservationByID( String K_codigo) throws CaException { 
+    public void getReservationByID(String K_codigo) throws CaException { 
         try{
             String strSQL = "SELECT k_codigo, k_idhotel, k_numeroid, k_tipo, k_cuenta, f_inicio, q_duracion, i_estado, q_cantpersonas "
                     + "FROM reserva WHERE k_codigo = ?";

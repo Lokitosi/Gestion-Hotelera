@@ -352,7 +352,7 @@ public class CheckIn extends JFrame implements ActionListener {
             try {
                 checkAssociaton();
             } catch (CaException e) {
-                Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
             makeCheckIn = false;
@@ -451,6 +451,8 @@ public class CheckIn extends JFrame implements ActionListener {
         if(!reservationDAO.getReservation().getK_codigo().equals("")){
             reservation = reservationDAO.getReservation();
             makeCheckIn = true;
+        } else {
+            makeCheckIn = false;
         }
     }
     
@@ -492,7 +494,7 @@ public class CheckIn extends JFrame implements ActionListener {
         //LocalDate, se encarga de representar la fecha actua
         LocalDate dateIn = LocalDate.of(year,month,day);
         //Calcula la fecha siguiente
-        LocalDate dateOut = dateIn.plus(4,ChronoUnit.DAYS);
+        LocalDate dateOut = dateIn.plus(days,ChronoUnit.DAYS);
         //Aplicamos un formato y luego convertimos a string para poder retornar 
         DateTimeFormatter formatDateSQL = DateTimeFormatter.ofPattern("dd'/'MM'/'yyyy");
         String dateOutString = dateOut.format(formatDateSQL);
