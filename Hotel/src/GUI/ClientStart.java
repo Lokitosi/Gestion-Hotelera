@@ -269,7 +269,7 @@ public class ClientStart extends JFrame implements ActionListener {
         roomType = typeDAOTemp.getType();
         Room room = new Room(); 
         room = roomDAOTemp.getRoom();
-        
+                
         typeList.add(roomType);
         roomList.add(room);
         
