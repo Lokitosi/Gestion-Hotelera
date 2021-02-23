@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import DAO.ReservationDAO;
 import DAO.Reservation_RoomDAO;
+import DAO.RoomDAO;
 import Database.CaException;
 import java.util.HashSet;
 
@@ -39,6 +40,7 @@ public class Reservation extends JFrame implements ActionListener {
     private ClientStart window3;
     
     private ReservationDAO reserveDAO;
+    private RoomDAO roomDAO;
     private Reservation_RoomDAO reserveRoomDAO;
     private Logic.Reservation reservation;
     
@@ -50,6 +52,7 @@ public class Reservation extends JFrame implements ActionListener {
     
     /* Constructor */
     public Reservation() {
+        roomDAO = new RoomDAO();
         reserveRoomDAO = new Reservation_RoomDAO();
         reserveDAO = new ReservationDAO();
         reservation = new Logic.Reservation();
@@ -199,7 +202,7 @@ public class Reservation extends JFrame implements ActionListener {
     
     /*Make reservation*/
     public void reserve() throws CaException{
-        //k_codigo = "a";//hacerlo autoincremental
+
         start_date = txtDate.getText();
         days = Short.valueOf(txtDays.getText());
         guests = Short.valueOf(txtGuests.getText());
@@ -209,7 +212,11 @@ public class Reservation extends JFrame implements ActionListener {
         reservation.setQ_cantPersonas(guests);
         reservation.setI_estado("a");
         reserveRoomDAO.setReservation(reservation);
+        ClientStart.roomSelected.setI_estado("r");
         reserveRoomDAO.setRoom(ClientStart.roomSelected);
+        roomDAO.setRoom(ClientStart.roomSelected);
+        roomDAO.updateRoom();
+        
               
         switch (Integer.toString(reserveDAO.getAllReservations()+ 1).length()) {
             case 1:
@@ -231,7 +238,7 @@ public class Reservation extends JFrame implements ActionListener {
         
         reserveDAO.insertReservation();
         reserveRoomDAO.insertReservation_Room();
-        System.out.println("se añadio el registro a la tabla");
+
     }
     
     
