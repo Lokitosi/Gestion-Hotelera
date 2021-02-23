@@ -30,16 +30,17 @@ public class PersonDAO {
         return person;
     }
     
-    public void getPersonByID (long k_numeroid, String n_nombre1) throws CaException {
+    public void getPersonByID (long k_numeroid, String n_nombre1, String n_apellido1) throws CaException {
         try{
             String strSQL = "SELECT k_numeroid, k_tipo, n_nombre1, " 
-                +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND n_nombre1 = ?";
+                +"n_nombre2, n_apellido1, n_apellido2  FROM persona WHERE k_numeroid = ? AND n_nombre1 = ? AND n_apellido1 = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
             pState.setLong(1, k_numeroid);  
             pState.setString(2, n_nombre1);   
+            pState.setString(3, n_apellido1);  
             
             ResultSet res = pState.executeQuery();
         

@@ -20,6 +20,7 @@ public class LogIn extends JFrame implements ActionListener {
     private JLabel lblBackground;
     
     private JTextField txtName;
+    private JTextField txtSurname;
     private JTextField txtDocument;
     
     private JButton btnLogIn;
@@ -35,6 +36,7 @@ public class LogIn extends JFrame implements ActionListener {
     public static Person person;
     
     private String nameText;
+    private String surnameText;
     private long documentText;
     
     private boolean canLogIn;
@@ -51,6 +53,7 @@ public class LogIn extends JFrame implements ActionListener {
         lblBackground = new JLabel();
         
         txtName = new JTextField();
+        txtSurname = new JTextField();
         txtDocument = new JTextField();
         
         btnLogIn = new JButton();
@@ -66,13 +69,19 @@ public class LogIn extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Log In/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        txtName.setBounds(422, 296, 627, 35);
+        txtName.setBounds(271, 296, 297, 35);
         txtName.setBorder(null);
         txtName.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtName.setForeground(new Color(24, 24, 24)); 
 	txtName.setOpaque(false);
         
-        txtDocument.setBounds(422, 414, 627, 35);
+        txtSurname.setBounds(852, 296, 297, 35);
+        txtSurname.setBorder(null);
+        txtSurname.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        txtSurname.setForeground(new Color(24, 24, 24)); 
+	txtSurname.setOpaque(false);
+        
+        txtDocument.setBounds(395, 414, 625, 35);
         txtDocument.setBorder(null);
         txtDocument.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         txtDocument.setForeground(new Color(24, 24, 24)); 
@@ -98,6 +107,7 @@ public class LogIn extends JFrame implements ActionListener {
         add(btnLogIn);
         add(btnGoToBack);
         
+        add(txtSurname);
         add(txtName);    
         add(txtDocument); 
         
@@ -105,12 +115,13 @@ public class LogIn extends JFrame implements ActionListener {
         
         this.setVisible(true);
     }
-    /*get set*/
 
+    /* Getters */
     public static Person getPerson() {
         return person;
     }
 
+    /* Setters */
     public static void setPerson(Person person) {
         LogIn.person = person;
     }
@@ -150,9 +161,10 @@ public class LogIn extends JFrame implements ActionListener {
         personDAO = new PersonDAO();
         
         nameText = txtName.getText();
+        surnameText = txtSurname.getText();
         documentText = Long.parseLong(txtDocument.getText());
         
-        personDAO.getPersonByID(documentText, nameText);
+        personDAO.getPersonByID(documentText, nameText, surnameText);
 
         if(personDAO.getPerson().getK_numeroid() != 0) {
             person = personDAO.getPerson();
