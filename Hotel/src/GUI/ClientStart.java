@@ -20,6 +20,7 @@ import Logic.Room;
 public class ClientStart extends JFrame implements ActionListener {
 
     /* Graphic variables */
+    public static ImageIcon roomImage;
     private ImageIcon imgScrollBar;
 
     private JLabel lblBackground;
@@ -50,7 +51,6 @@ public class ClientStart extends JFrame implements ActionListener {
 
     private String roomTypeText;
     public static String typeConversion;
-    private int roomCant;
     private int roomNumStart;
     private int filterState;
     private int roomPanelPos;
@@ -146,7 +146,7 @@ public class ClientStart extends JFrame implements ActionListener {
         btnTriple.addActionListener(this);
 
         pnlAllRooms.setBounds(13, 257, 1174, 400);
-        pnlAllRooms.setPreferredSize(new Dimension(roomCant * 700, 400));
+        pnlAllRooms.setPreferredSize(new Dimension(0, 400));
         pnlAllRooms.setLayout(null);
         pnlAllRooms.setOpaque(false);
 
@@ -221,7 +221,6 @@ public class ClientStart extends JFrame implements ActionListener {
 
     /* Manage filters */
     public void addFilter(String filterName) {
-        roomCant = 0;
         lblFilterName.setText("         " + filterName);
         deleteRooms();
 
@@ -243,18 +242,13 @@ public class ClientStart extends JFrame implements ActionListener {
                     default:
                         break;
                 }
-
-                roomCant += 1;
             }
 
         } catch (CaException e) {
             Logger.getLogger(ClientStart.class.getName()).log(Level.SEVERE, null, e);
         }
-        /*System.out.println(roomList.get(1).getK_numero());
-            System.out.println(roomList.get(2).getK_numero());
-            System.out.println(roomList.get(3).getK_numero());*/
-
-        pnlAllRooms.setPreferredSize(new Dimension(roomCant * 700, 400));
+        
+        pnlAllRooms.setPreferredSize(new Dimension(roomList.size() * 700, 400));
     }
 
     /* Manage rooms */
@@ -273,7 +267,6 @@ public class ClientStart extends JFrame implements ActionListener {
             roomList.add(room);
             typeList.add(roomType);
             createRoom(roomType, room);
-
         }
 
     }
@@ -281,10 +274,13 @@ public class ClientStart extends JFrame implements ActionListener {
     public void createRoom(RoomType type, Room room) {
         if (type.getK_idTipo().equals("T001")) {
             typeConversion = "Simple";
+            roomImage = new ImageIcon("./Images/Client Start/Lbl Simple Image.png");
         } else if (type.getK_idTipo().equals("T002")) {
             typeConversion = "Doble";
+            roomImage = new ImageIcon("./Images/Client Start/Lbl Double Image.png");
         } else if (type.getK_idTipo().equals("T003")) {
             typeConversion = "Triple";
+            roomImage = new ImageIcon("./Images/Client Start/Lbl Triple Image.png");
         }
 
         // Create components
@@ -301,7 +297,7 @@ public class ClientStart extends JFrame implements ActionListener {
         JPanel pnlRoom = new JPanel();
 
         // Configure components 
-        lblRoomImage.setIcon(new ImageIcon(("./Images/Client Start/Lbl Room Image.png")));
+        lblRoomImage.setIcon(roomImage);
         lblRoomImage.setBounds(-3, 0, 245, 222);
 
         lblRoomInfo.setIcon(new ImageIcon(("./Images/Client Start/Lbl Room Info.png")));

@@ -88,7 +88,7 @@ public class Reservation extends JFrame implements ActionListener {
         lblBackground.setIcon(new ImageIcon(("./Images/Reservation/Background.png"))); 
         lblBackground.setBounds(0, 0, 1200, 720);
         
-        lblRoomImage.setIcon(new ImageIcon(("./Images/Reservation/Lbl Room Image.png"))); 
+        lblRoomImage.setIcon(ClientStart.roomImage); 
         lblRoomImage.setBounds(74, 165, 245, 222);
         
         lblNumber.setBounds(210, 429, 150, 30);
