@@ -19,12 +19,15 @@ import DAO.PersonDAO;
 import DAO.PhoneDAO;
 import DAO.RegisterCIDAO;
 import DAO.ReservationDAO;
+import DAO.Reservation_RoomDAO;
+import DAO.RoomDAO;
 import Database.CaException;
 import Logic.Host;
 import Logic.Person;
 import Logic.Phone;
 import Logic.Reservation;
 import Logic.RegisterCI;
+import Logic.Room;
 
 public class CheckIn extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -61,6 +64,8 @@ public class CheckIn extends JFrame implements ActionListener {
     private ReservationDAO reservationDAO;
     private RegisterCIDAO registerCIDAO;
     private HostDAO hostDAO;
+    private Reservation_RoomDAO reservation_roomDAO;
+    private RoomDAO roomDAO;
     
     private Person person;
     private Person reserver;
@@ -68,6 +73,7 @@ public class CheckIn extends JFrame implements ActionListener {
     private Reservation reservation;
     private RegisterCI registerci;
     private Host host;
+    private Room room;
     
     private String name1Text;
     private String name2Text;
@@ -95,6 +101,7 @@ public class CheckIn extends JFrame implements ActionListener {
         reservationDAO = new ReservationDAO();
         registerCIDAO = new RegisterCIDAO();
         hostDAO = new HostDAO();
+        
         person = new Person();
         reserver = new Person();
         phone = new Phone();
@@ -396,6 +403,21 @@ public class CheckIn extends JFrame implements ActionListener {
         }
     }
     
+    public void change() throws CaException {
+        reservation_roomDAO = new Reservation_RoomDAO();
+        roomDAO = new RoomDAO();
+        room = new Room();
+        
+        reservation_roomDAO.getReservation_RoomByID(reservationCodeText);
+        
+        room = reservation_roomDAO.getRoom();
+
+        room.setI_estado("h");
+        roomDAO.setRoom(room);
+        
+        roomDAO.updateRoom();
+    }
+    
     /* "Check in" on Forward */
     public void checkInLastPart() throws CaException {
         directionText = txtDirection.getText();
@@ -529,6 +551,7 @@ public class CheckIn extends JFrame implements ActionListener {
                     checkInFirstPart();
                     checkInLastPart();
                     adWindow = new Ads("./Images/Check In/Ad Successful Check In.png");
+                    change();
                     clear();
                     goBackward();
                 } catch (CaException e ) {

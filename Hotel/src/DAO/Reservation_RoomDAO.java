@@ -34,21 +34,19 @@ public class Reservation_RoomDAO {
         return room;
     }
     
-    public void getReservation_RoomByID() throws CaException {
+    public void getReservation_RoomByID(String k_codigo) throws CaException {
         try{
-            String strSQL = "SELECT * FROM reservahabitacion WHERE k_numero = ? and k_codigo = ?";
+            String strSQL = "SELECT k_numero FROM reservahabitacion WHERE k_codigo = ?";
             
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, room.getK_numero()); 
-            pState.setString(2, reservation.getK_codigo());  
+            pState.setString(1, reservation.getK_codigo());  
             
             ResultSet res = pState.executeQuery();
         
             while (res.next()){
-                room.setK_numero(res.getString(1));
-                reservation.setK_codigo(res.getString(2)); 
+                room.setK_numero(res.getString(1)); 
             }
         } catch(SQLException e) {
             throw new CaException("Reservation_RoomDAO", "No pudo recuperar la reservación - habitación " + e.getMessage());
