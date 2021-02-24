@@ -338,6 +338,7 @@ public class CheckIn extends JFrame implements ActionListener {
         txtDate.setText("");
         txtReserverDocument.setText("");
         txtDays.setText("");
+        txtReservationCode.setText("");
     }
     
     /* Verify text fields in the Backward */
@@ -355,7 +356,7 @@ public class CheckIn extends JFrame implements ActionListener {
     public void verifyReservation(){    
         if ((!txtDirection.getText().equals("")) && (!txtDate.getText().equals(""))
             && (!txtDays.getText().equals("")) && (!txtReserverDocument.getText().equals("")) 
-            && (!txtBornDate.getText().equals(""))){
+            && (!txtBornDate.getText().equals("")) && (!txtReservationCode.getText().equals(""))){
             
             try {
                 checkAssociaton();
@@ -465,6 +466,7 @@ public class CheckIn extends JFrame implements ActionListener {
     /* Found reserve*/
     public void checkAssociaton() throws CaException{
         reservationDAO = new ReservationDAO();
+        reservation = new Reservation();
         
         reserverDocumentText = Long.parseLong(txtReserverDocument.getText());
         
