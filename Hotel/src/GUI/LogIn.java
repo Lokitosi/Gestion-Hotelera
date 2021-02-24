@@ -149,6 +149,8 @@ public class LogIn extends JFrame implements ActionListener {
                 checkLogIn();
             } catch (CaException e) {
                 Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
+            } catch(NumberFormatException e) {
+                adWindow = new Ads("./Images/Log In/Ad Incorrect Data.png");
             }
         } else {
             adWindow = new Ads("./Images/Log In/Ad Empty Field.png");

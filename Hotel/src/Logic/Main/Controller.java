@@ -4,11 +4,11 @@ package Logic.Main;
  * Initialize the window
 */
 
-import GUI.CheckIn;
+import GUI.Start;
 
 public class Controller {
     /* Main function */
     public static void main(String[] args) {          
-        CheckIn window = new CheckIn();
+        Start window = new Start();
     }
 }

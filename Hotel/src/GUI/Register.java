@@ -244,7 +244,9 @@ public class Register extends JFrame implements ActionListener {
                     clear();
                 } catch (CaException e) {
                     adWindow = new Ads("./Images/Register/Ad Existing Register.png");
-                } 
+                } catch(NumberFormatException e) {
+                    adWindow = new Ads("./Images/Register/Ad Incorrect Data.png");
+                }
             } else {
                 adWindow = new Ads("./Images/Register/Ad Empty Field.png");
             }     

@@ -15,6 +15,7 @@ import DAO.ReservationDAO;
 import DAO.Reservation_RoomDAO;
 import DAO.RoomDAO;
 import Database.CaException;
+import java.text.ParseException;
 import java.util.HashSet;
 
 public class Reservation extends JFrame implements ActionListener {
@@ -257,10 +258,11 @@ public class Reservation extends JFrame implements ActionListener {
                     adWindow = new Ads("./Images/Reservation/Ad Successful Reservation.png");
                     clear();
                     goToClientStart();
-                } catch (CaException ex) {
-                    Logger.getLogger(Reservation.class.getName()).log(Level.SEVERE, null, ex);
-                    adWindow = new Ads("./Images/Reservation/Ad Incorrect Date.png");
-                }
+                } catch (CaException e) {
+                    Logger.getLogger(LogIn.class.getName()).log(Level.SEVERE, null, e);
+                } catch(NumberFormatException e) {
+                    adWindow = new Ads("./Images/Reservation/Ad Incorrect Data.png");
+                } 
             } else {
                 adWindow = new Ads("./Images/Reservation/Ad Empty Field.png");
             } 

@@ -28,6 +28,7 @@ import Logic.Phone;
 import Logic.Reservation;
 import Logic.RegisterCI;
 import Logic.Room;
+import java.text.ParseException;
 
 public class CheckIn extends JFrame implements ActionListener {
     /* Graphic variables */
@@ -414,7 +415,6 @@ public class CheckIn extends JFrame implements ActionListener {
 
         room.setI_estado("h");
         roomDAO.setRoom(room);
-        System.out.println(roomDAO.getRoom().getI_estado());
         roomDAO.updateRoom();
     }
     
@@ -556,7 +556,8 @@ public class CheckIn extends JFrame implements ActionListener {
                     goBackward();
                 } catch (CaException e ) {
                     Logger.getLogger(CheckIn.class.getName()).log(Level.SEVERE, null, e);
-                    adWindow = new Ads("./Images/Check In/Ad Incorrect Date.png");
+                } catch(NumberFormatException e) {
+                    adWindow = new Ads("./Images/Check In/Ad Incorrect Data.png");
                 }
             } else {
                 adWindow = new Ads("./Images/Check In/Ad Non Existent Reservation.png");
