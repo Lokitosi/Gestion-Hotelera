@@ -41,7 +41,7 @@ public class Reservation_RoomDAO {
             Connection connection = ServiceLocator.getInstance().takeConnection();
             PreparedStatement pState = connection.prepareStatement(strSQL);
             
-            pState.setString(1, reservation.getK_codigo());  
+            pState.setString(1, k_codigo);  
             
             ResultSet res = pState.executeQuery();
         

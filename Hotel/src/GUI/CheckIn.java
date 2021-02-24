@@ -414,7 +414,7 @@ public class CheckIn extends JFrame implements ActionListener {
 
         room.setI_estado("h");
         roomDAO.setRoom(room);
-        
+        System.out.println(roomDAO.getRoom().getI_estado());
         roomDAO.updateRoom();
     }
     
