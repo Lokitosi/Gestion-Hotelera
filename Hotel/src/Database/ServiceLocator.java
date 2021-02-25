@@ -2,10 +2,6 @@ package Database;
 
 import java.sql.*;
 
-/**
- * 
- * @author Alba Consuelo Nieto
-*/
 
 public class ServiceLocator {
     private static ServiceLocator instance = null;
@@ -17,11 +13,12 @@ public class ServiceLocator {
         try {
             String url = "jdbc:postgresql://localhost:5432/Hotel";
             String usuario = "postgres";
-            String password = "juliono1999";
+            String password = "password";
             Class.forName("org.postgresql.Driver").newInstance();
             connection = DriverManager.getConnection(url, usuario, password);
             connection.setAutoCommit(false);
         } catch (Exception e) {
+            System.out.println("por favor verifique que los datos de conexion sean correctos");
             throw new CaException("ServiceLocator", "ERROR_CONEXION_BD " + e);
         }
     }
