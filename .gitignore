@@ -1,2 +1,3 @@
-Hotel/build
-Hotel/postgresql-42.2.2.18.jar
+/Hotel/build
+/Hotel/postgresql-42.2.2.18.jar
+/Hotel/nbproject/private
